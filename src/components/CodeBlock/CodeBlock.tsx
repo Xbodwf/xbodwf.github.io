@@ -145,14 +145,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
           </span>
         </button>
       </div>
-      <pre className="code-pre">
-        <code 
-          ref={codeRef} 
-          className={`language-${language}`}
-        >
-          {code}
-        </code>
-      </pre>
+      <pre className="code-pre"><code ref={codeRef} className={`language-${language}`}>{code}</code></pre>
     </div>
   )
 }

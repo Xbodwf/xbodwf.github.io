@@ -23,23 +23,32 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
   useEffect(() => {
     const loadArticles = async () => {
       try {
-        const articlePromises = [1, 2, 3].map(async (id) => {
+        // 先获取文章列表数据
+        const listResponse = await fetch('https://raw.githubusercontent.com/Xbodwf/Assets/main/articles/files.json');
+        if (!listResponse.ok) {
+          throw new Error('Failed to fetch article list');
+        }
+        
+        const { articles } = await listResponse.json();
+        
+        // 根据获取到的文章列表生成请求Promise数组
+        const articlePromises = articles.map(async (article: { id: string; filename: string; title?: string; description?: string }) => {
           try {
-            const response = await fetch(`/articles/${id}.md`)
-            if (!response.ok) return null
+            const response = await fetch(`https://raw.githubusercontent.com/Xbodwf/Assets/main/articles/${article.filename}`);
+            if (!response.ok) return null;
             
-            const content = await response.text()
-            const frontMatterMatch = content.match(/^---\r?\n([\s\S]*?)\r?\n---/)
+            const content = await response.text();
+            const frontMatterMatch = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
             
-            if (!frontMatterMatch) return null
+            if (!frontMatterMatch) return null;
             
-            const frontMatter = parseFrontMatter(frontMatterMatch[1])
-            const articleContent = content.slice(frontMatterMatch[0].length).trim()
+            const frontMatter = parseFrontMatter(frontMatterMatch[1]);
+            const articleContent = content.slice(frontMatterMatch[0].length).trim();
             
             return {
-              id: id.toString(),
-              title: frontMatter.title || `文章 ${id}`,
-              description: frontMatter.description || '',
+              id: article.id,
+              title: frontMatter.title || article.title || `文章 ${article.id}`,
+              description: frontMatter.description || article.description || '',
               content: articleContent,
               createdAt: frontMatter.date || new Date().toISOString(),
               updatedAt: frontMatter.updated || frontMatter.date || new Date().toISOString(),

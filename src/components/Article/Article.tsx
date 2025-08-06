@@ -186,9 +186,7 @@ const Article: React.FC = () => {
               <span class="copy-text">Copy</span>
             </button>
           </div>
-          <pre class="code-pre">
-            <code id="${codeId}" class="language-${language}" data-raw-code="${text.replace(/"/g, '&quot;')}">${highlightedCode}</code>
-          </pre>
+          <pre class="code-pre"><code id="${codeId}" class="language-${language}" data-raw-code="${text.replace(/"/g, '&quot;')}">${highlightedCode}</code></pre>
         </div>
       `
     }

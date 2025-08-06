@@ -1,6 +1,6 @@
 /* Chillax Font Family - Local Files */
 @font-face {
-  font-family: 'Chillax';
+  font-family: 'Chillax Extralight';
   src: url('./Chillax-Extralight.otf') format('opentype');
   font-weight: 200;
   font-style: normal;
@@ -8,7 +8,7 @@
 }
 
 @font-face {
-  font-family: 'Chillax';
+  font-family: 'Chillax Light';
   src: url('./Chillax-Light.otf') format('opentype');
   font-weight: 300;
   font-style: normal;
@@ -16,7 +16,7 @@
 }
 
 @font-face {
-  font-family: 'Chillax';
+  font-family: 'Chillax Regular';
   src: url('./Chillax-Regular.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
@@ -24,7 +24,7 @@
 }
 
 @font-face {
-  font-family: 'Chillax';
+  font-family: 'Chillax Medium';
   src: url('./Chillax-Medium.otf') format('opentype');
   font-weight: 500;
   font-style: normal;
@@ -32,7 +32,7 @@
 }
 
 @font-face {
-  font-family: 'Chillax';
+  font-family: 'Chillax Semibold';
   src: url('./Chillax-Semibold.otf') format('opentype');
   font-weight: 600;
   font-style: normal;
@@ -40,7 +40,7 @@
 }
 
 @font-face {
-  font-family: 'Chillax';
+  font-family: 'Chillax Bold';
   src: url('./Chillax-Bold.otf') format('opentype');
   font-weight: 700;
   font-style: normal;
@@ -58,9 +58,9 @@
 
 /* CSS Variables for Font Families */
 :root {
-  --font-primary: 'Chillax', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --font-primary: 'Chillax Light', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   --font-primary-variable: 'Chillax Variable', 'Chillax', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  --font-secondary: 'Lexend', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --font-secondary: 'Chillax Light','Lexend', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   --font-mono: 'Fira Code', 'JetBrains Mono', 'Cascadia Code', 'SF Mono', Monaco, 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;
 }
 
