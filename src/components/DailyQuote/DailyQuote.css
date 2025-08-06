@@ -1,0 +1,210 @@
+.quote-section {
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+  padding: 3rem 0;
+  margin-bottom: 2rem;
+  transition: background 0.3s ease;
+}
+
+.quote-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.quote-card {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: var(--shadow-md);
+  max-width: 800px;
+  margin: 0 auto;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  background-color: rgba(var(--bg-primary-rgb), 0.9);
+}
+
+.quote-title {
+  font-family: var(--font-primary);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 2rem;
+  transition: color 0.3s ease;
+}
+
+.quote-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem 0;
+  color: var(--text-secondary);
+  font-family: var(--font-secondary);
+  transition: color 0.3s ease;
+}
+
+.quote-loading-spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--border-color);
+  border-top: 2px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.quote-content {
+  text-align: center;
+}
+
+.quote-text {
+  font-family: var(--font-secondary);
+  font-size: 1.25rem;
+  line-height: 1.8;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  font-weight: 400;
+  font-style: italic;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.quote-text::before {
+  content: '"';
+  font-size: 2rem;
+  color: var(--primary-color);
+  position: absolute;
+  left: -1.5rem;
+  top: -0.5rem;
+  font-family: var(--font-primary);
+  transition: color 0.3s ease;
+}
+
+.quote-text::after {
+  content: '"';
+  font-size: 2rem;
+  color: var(--primary-color);
+  position: absolute;
+  right: -1.5rem;
+  bottom: -0.5rem;
+  font-family: var(--font-primary);
+  transition: color 0.3s ease;
+}
+
+.quote-attribution {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quote-source {
+  font-family: var(--font-secondary);
+  font-size: 1rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.quote-error {
+  text-align: center;
+  color: var(--error-color);
+  font-family: var(--font-secondary);
+  font-size: 1rem;
+  padding: 2rem 0;
+  transition: color 0.3s ease;
+}
+
+/* Dark mode specific adjustments */
+[data-theme="dark"] .quote-section {
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+}
+
+[data-theme="dark"] .quote-card {
+  background-color: rgba(var(--bg-primary-rgb), 0.95);
+  border-color: var(--border-color);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .quote-text::before,
+[data-theme="dark"] .quote-text::after {
+  color: var(--accent-color);
+}
+
+/* Light mode specific adjustments */
+[data-theme="light"] .quote-section {
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+}
+
+[data-theme="light"] .quote-card {
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 768px) {
+  .quote-section {
+    padding: 2rem 0;
+    margin-bottom: 1.5rem;
+  }
+  
+  .quote-container {
+    padding: 0 1rem;
+  }
+  
+  .quote-card {
+    padding: 2rem 1.5rem;
+    border-radius: 12px;
+  }
+  
+  .quote-title {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .quote-text {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+  
+  .quote-text::before,
+  .quote-text::after {
+    font-size: 1.5rem;
+  }
+  
+  .quote-text::before {
+    left: -1rem;
+    top: -0.25rem;
+  }
+  
+  .quote-text::after {
+    right: -1rem;
+    bottom: -0.25rem;
+  }
+  
+  .quote-source {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .quote-card {
+    padding: 1.5rem 1rem;
+  }
+  
+  .quote-text {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+  
+  .quote-text::before,
+  .quote-text::after {
+    display: none;
+  }
+}
