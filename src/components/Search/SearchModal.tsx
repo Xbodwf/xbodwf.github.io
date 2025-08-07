@@ -34,7 +34,9 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
         // 根据获取到的文章列表生成请求Promise数组
         const articlePromises = articles.map(async (article: { id: string; filename: string; title?: string; description?: string }) => {
           try {
-            const response = await fetch(`https://raw.githubusercontent.com/Xbodwf/Assets/main/articles/${article.filename}`);
+            const response = await fetch(`https://raw.githubusercontent.com/Xbodwf/Assets/main/articles/${article.filename}`,{
+        cache: "no-store"
+    });
             if (!response.ok) return null;
             
             const content = await response.text();

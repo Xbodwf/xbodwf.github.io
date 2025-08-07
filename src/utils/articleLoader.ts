@@ -39,7 +39,9 @@ export const parseFrontMatter = (yamlContent: string) => {
 // 加载文章配置
 export const loadArticlesConfig = async (): Promise<FilesConfig> => {
   try {
-    const response = await fetch('https://raw.githubusercontent.com/Xbodwf/Assets/main/articles/files.json')
+    const response = await fetch('https://raw.githubusercontent.com/Xbodwf/Assets/main/articles/files.json',{
+        cache: "no-store"
+    })
     if (!response.ok) {
       throw new Error('Failed to load articles config')
     }
@@ -65,7 +67,9 @@ export const loadArticle = async (id: string): Promise<Article | null> => {
       return null
     }
     
-    const response = await fetch(`https://raw.githubusercontent.com/Xbodwf/Assets/main/articles/${articleMeta.filename}`)
+    const response = await fetch(`https://raw.githubusercontent.com/Xbodwf/Assets/main/articles/${articleMeta.filename}`,{
+        cache: "no-store"
+    })
     if (!response.ok) {
       return null
     }
