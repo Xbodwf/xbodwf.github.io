@@ -68,6 +68,14 @@ const Home: React.FC = () => {
                 >
                   {t('nav.home')}
                 </a>
+                <a 
+                  href="/#/p/1" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="card-link"
+                >
+                  Redirect
+                </a>
               </div>
             </div>
           </div>
