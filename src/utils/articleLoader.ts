@@ -39,7 +39,7 @@ export const parseFrontMatter = (yamlContent: string) => {
 // 加载文章配置
 export const loadArticlesConfig = async (): Promise<FilesConfig> => {
   try {
-    const response = await fetch('/articles/files.json',{
+    const response = await fetch('https://raw.githubusercontent.com/Xbodwf/Assets/main/articles/files.json',{
         cache: "no-store"
     })
     if (!response.ok) {

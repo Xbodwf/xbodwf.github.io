@@ -5,7 +5,7 @@ import hljs from "highlight.js";
 import { ContentCopy, Check } from "@mui/icons-material";
 import { useTheme } from "../contexts/ThemeContext";
 import ThemeManager from "./themeManager";
-import "../components/CodeBlock/CodeBlock.css";
+import "./CodeBlock.css";
 
 // 语言显示名映射
 const getLanguageDisplayName = (lang: string): string => {
