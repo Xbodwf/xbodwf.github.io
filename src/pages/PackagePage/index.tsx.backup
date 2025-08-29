@@ -1,0 +1,28 @@
+import { useParams } from "react-router-dom";
+import React from "react";
+import DocSystemA from "../docs/DocSystemA";
+import DocSystemB from "../docs/DocSystemB";
+import DefaultPackagePage from "../docs/DefaultPackagePage";
+
+const docSystems = {
+  react: DocSystemA,
+  vue: DocSystemB,
+  // 其他 package 映射
+};
+
+export default function PackagePage() {
+  const { packagename, article } = useParams();
+  const DocSystem = docSystems[packagename];
+
+  if (!DocSystem) {
+    return <div>未找到对应的文档系统</div>;
+  }
+
+  // 如果没有 article，返回默认界面
+  if (!article) {
+    return <DefaultPackagePage packagename={packagename} />;
+  }
+
+  // 否则加载对应文档系统
+  return <DocSystem article={article} />;
+}

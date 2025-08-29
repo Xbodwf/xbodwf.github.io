@@ -7,6 +7,8 @@ import Home from './pages/Home/Home'
 import Article from './components/Article/Article'
 import ArticleList from './pages/ArticleList/ArticleList'
 import NotFound from './pages/NotFound/NotFound'
+//import PackagePage from "./pages/PackagePage";
+
 import './App.css'
 import './assets/fonts/fonts.css'
 
@@ -22,6 +24,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/p" element={<ArticleList />} />
                 <Route path="/p/:id" element={<Article />} />
+                {/*<Route path="/packages/:packagename/:article?" element={<PackagePage />} />*/}
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>

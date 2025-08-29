@@ -67,7 +67,7 @@ export const loadArticle = async (id: string): Promise<Article | null> => {
       return null
     }
     
-    const response = await fetch(`/articles/${articleMeta.filename}`,{
+    const response = await fetch(`https://raw.githubusercontent.com/Xbodwf/Assets/main/articles/${articleMeta.filename}`,{
         cache: "no-store"
     })
     if (!response.ok) {

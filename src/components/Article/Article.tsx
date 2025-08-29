@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react'
 import { useParams, useLocation } from 'react-router-dom'
 import { marked } from 'marked'
 import type { Tokens } from 'marked'
+import Markdown from '../../utils/markdown';
 import hljs from 'highlight.js'
 import { useTheme } from '../../contexts/ThemeContext'
 import ThemeManager from '../../utils/themeManager'
@@ -371,8 +372,10 @@ const Article: React.FC = () => {
         
         <div 
           className="article-content"
-          dangerouslySetInnerHTML={{ __html: parsedContent }}
-        />
+          /*dangerouslySetInnerHTML={{ __html: parsedContent }}*/
+        >
+          <Markdown content={article.content} />
+        </div>
       </article>
     </div>
   )
