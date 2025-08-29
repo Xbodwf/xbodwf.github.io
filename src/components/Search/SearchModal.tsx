@@ -24,7 +24,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
     const loadArticles = async () => {
       try {
         // 先获取文章列表数据
-        const listResponse = await fetch('/articles/files.json');
+        const listResponse = await fetch('https://raw.githubusercontent.com/Xbodwf/Assets/main/articles/files.json');
         if (!listResponse.ok) {
           throw new Error('Failed to fetch article list');
         }
