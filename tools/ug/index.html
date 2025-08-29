@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS/TS Obfuscator</title>
+    <script src="https://cdn.tailwindcss.com/3.4.13"></script>
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcdn.net/ajax/libs/ace/1.43.2/ace.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/ace/1.43.2/mode-javascript.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/ace/1.43.2/mode-typescript.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/ace/1.43.2/theme-dracula.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/babel-standalone/7.28.3/babel.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36CFC9',
+                        dark: '#1D2129',
+                        light: '#F2F3F5',
+                        success: '#52C41A',
+                        warning: '#FAAD14',
+                        danger: '#FF4D4F',
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <script src="./ug.min.js"></script>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .editor-container {
+                @apply relative rounded-lg overflow-hidden border border-gray-300 dark:border-gray-700 transition-all duration-300;
+            }
+            .btn-primary {
+                @apply bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-md hover:shadow-lg flex items-center justify-center gap-2;
+            }
+            .btn-secondary {
+                @apply bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-sm hover:shadow;
+            }
+            .section-card {
+                @apply bg-white dark:bg-dark rounded-xl shadow-lg p-4 transition-all duration-300 hover:shadow-xl;
+            }
+            .editor-toolbar {
+                @apply flex flex-wrap items-center gap-2 p-3 bg-gray-100 dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700;
+            }
+            .progress-bar {
+                @apply h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden;
+            }
+            .progress-value {
+                @apply h-full bg-primary rounded-full transition-all duration-500 ease-out w-0;
+            }
+        }
+    </style>
+</head>
+
+<body class="font-inter bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <i class="fa fa-code text-primary text-3xl"></i>
+                <h1 class="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                    Obfuscator</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <button id="theme-toggle"
+                    class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <i class="fa fa-moon-o dark:hidden text-xl"></i>
+                    <i class="fa fa-sun-o hidden dark:block text-xl"></i>
+                </button>
+                <button class="btn-primary" id="help-btn">
+                    <i class="fa fa-question-circle"></i>
+                    <span>Help</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-6">
+        <!-- Introduction -->
+        <div class="mb-6 p-4 bg-primary/10 dark:bg-primary/20 rounded-xl border border-primary/20">
+            <p class="text-center">Convert modern JavaScript/TypeScript to ES5 and minify it with a single click. Upload
+                files or type your code directly.</p>
+        </div>
+
+        <!-- Editor Sections -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Input Editor Section -->
+            <div class="section-card">
+                <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+                    <i class="fa fa-code text-primary"></i>
+                    Input Code
+                </h2>
+
+                <div class="editor-toolbar">
+                    <div class="flex gap-2">
+                        <button class="btn-secondary" id="lang-toggle">
+                            <i class="fa fa-language"></i>
+                            <span>TypeScript</span>
+                        </button>
+                        <label for="file-upload" class="btn-secondary cursor-pointer">
+                            <i class="fa fa-upload"></i>
+                            <span>Upload File</span>
+                        </label>
+                        <input type="file" id="file-upload" accept=".js,.ts,.mjs,.cjs,.es6,.jsx,.tsx" class="hidden">
+                        <button class="btn-secondary" id="clear-input">
+                            <i class="fa fa-trash"></i>
+                            <span>Clear</span>
+                        </button>
+                    </div>
+
+                    <div class="ml-auto">
+                        <button class="btn-primary" id="transform-btn">
+                            <i class="fa fa-magic"></i>
+                            <span>Transform</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="editor-container h-[500px]">
+                    <div id="input-editor" class="w-full h-full"></div>
+                </div>
+
+                <div class="mt-4 hidden" id="input-status">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-sm font-medium" id="input-status-text">Processing...</span>
+                        <span class="text-xs text-gray-500" id="input-characters">0 characters</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-value" id="input-progress"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Output Editor Section -->
+            <div class="section-card">
+                <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+                    <i class="fa fa-code-fork text-secondary"></i>
+                    Transformed Output
+                </h2>
+
+                <div class="editor-toolbar">
+                    <div class="flex gap-2">
+                        <button class="btn-secondary" id="copy-output">
+                            <i class="fa fa-copy"></i>
+                            <span>Copy</span>
+                        </button>
+                        <button class="btn-secondary" id="download-output">
+                            <i class="fa fa-download"></i>
+                            <span>Download</span>
+                        </button>
+                        <button class="btn-secondary" id="clear-output">
+                            <i class="fa fa-trash"></i>
+                            <span>Clear</span>
+                        </button>
+                    </div>
+
+                    <div class="ml-auto text-sm font-medium" id="output-status">
+                        <span class="text-gray-500">Ready</span>
+                    </div>
+                </div>
+
+                <div class="editor-container h-[500px]">
+                    <div id="output-editor" class="w-full h-full"></div>
+                </div>
+
+                <div class="mt-4 grid grid-cols-3 gap-2 text-sm">
+                    <div class="bg-gray-100 dark:bg-gray-800 p-2 rounded-lg">
+                        <span class="font-medium">Original Size:</span>
+                        <span id="original-size" class="ml-1">0 KB</span>
+                    </div>
+                    <div class="bg-gray-100 dark:bg-gray-800 p-2 rounded-lg">
+                        <span class="font-medium">Ouput content Size:</span>
+                        <span id="es5-size" class="ml-1">0 KB</span>
+                    </div>
+                    <div class="bg-gray-100 dark:bg-gray-800 p-2 rounded-lg">
+                        <span class="font-medium">Minified Size:</span>
+                        <span id="minified-size" class="ml-1">0 KB</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div
+                class="bg-white dark:bg-dark p-5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-gray-800">
+                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                    <i class="fa fa-bolt text-primary text-xl"></i>
+                </div>
+                <h3 class="text-lg font-bold mb-2">Instant Transformation</h3>
+                <p class="text-gray-600 dark:text-gray-400">Convert your modern JavaScript/TypeScript code to ES5
+                    instantly with Babel.</p>
+            </div>
+
+            <div
+                class="bg-white dark:bg-dark p-5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-gray-800">
+                <div class="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center mb-4">
+                    <i class="fa fa-compress text-secondary text-xl"></i>
+                </div>
+                <h3 class="text-lg font-bold mb-2">Code Minification</h3>
+                <p class="text-gray-600 dark:text-gray-400">Minify your transformed code to reduce file size and improve
+                    loading times.</p>
+            </div>
+
+            <div
+                class="bg-white dark:bg-dark p-5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-gray-800">
+                <div class="w-12 h-12 bg-success/10 rounded-full flex items-center justify-center mb-4">
+                    <i class="fa fa-file-code-o text-success text-xl"></i>
+                </div>
+                <h3 class="text-lg font-bold mb-2">File Operations</h3>
+                <p class="text-gray-600 dark:text-gray-400">Upload existing files and download transformed results with
+                    ease.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Help Modal -->
+    <div id="help-modal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-gray-200 dark:border-gray-700">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-bold">How to Use</h2>
+                    <button id="close-help" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                        <i class="fa fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <ol class="space-y-4">
+                    <li class="flex gap-3">
+                        <span
+                            class="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+                        <div>
+                            <h3 class="font-bold text-lg">Enter or Upload Code</h3>
+                            <p>Type your JavaScript/TypeScript code in the left editor or upload a file using the
+                                "Upload File" button.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span
+                            class="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+                        <div>
+                            <h3 class="font-bold text-lg">Select Language</h3>
+                            <p>Toggle between JavaScript and TypeScript using the "Language" button.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span
+                            class="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
+                        <div>
+                            <h3 class="font-bold text-lg">Transform Code</h3>
+                            <p>Click the "Transform" button to convert your code to ES5 and minify it.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span
+                            class="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
+                        <div>
+                            <h3 class="font-bold text-lg">Use the Result</h3>
+                            <p>Copy the transformed code to your clipboard or download it as a file using the buttons in
+                                the right panel.</p>
+                        </div>
+                    </li>
+                </ol>
+
+                <div class="mt-6 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
+                    <h3 class="font-bold text-lg mb-2">Supported Features</h3>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li>ES6+ to ES5 conversion</li>
+                        <li>TypeScript to ES5 conversion</li>
+                        <li>Code minification</li>
+                        <li>File upload (.js, .ts)</li>
+                        <li>File download (.js)</li>
+                        <li>Dark/light mode</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification"
+        class="fixed bottom-4 right-4 p-4 rounded-lg shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 max-w-sm">
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-6">
+        <div class="container mx-auto px-4 text-center text-gray-600 dark:text-gray-400">
+            <p>&copy; 2023 Babel ES5 Transformer | Powered by Babel and Ace Editor</p>
+            <div class="flex justify-center gap-4 mt-2">
+                <a href="#" class="hover:text-primary transition-colors"><i class="fa fa-github text-xl"></i></a>
+                <a href="#" class="hover:text-primary transition-colors"><i class="fa fa-twitter text-xl"></i></a>
+                <a href="#" class="hover:text-primary transition-colors"><i class="fa fa-linkedin text-xl"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize editors
+        const inputEditor = ace.edit("input-editor");
+        const outputEditor = ace.edit("output-editor");
+
+        // Configure input editor
+        inputEditor.setTheme("ace/theme/dracula");
+        inputEditor.session.setMode("ace/mode/typescript");
+        inputEditor.setOptions({
+            fontSize: "14px",
+            showPrintMargin: false,
+            wrap: true,
+            enableBasicAutocompletion: true,
+            enableLiveAutocompletion: true,
+            enableSnippets: true
+        });
+
+        // Configure output editor
+        outputEditor.setTheme("ace/theme/dracula");
+        outputEditor.session.setMode("ace/mode/javascript");
+        outputEditor.setReadOnly(true);
+        outputEditor.setOptions({
+            fontSize: "14px",
+            showPrintMargin: false,
+            wrap: true
+        });
+
+        // Set initial example code
+        inputEditor.setValue(`// Type or paste your JavaScript/TypeScript code here
+// Example:
+const add = (a: number, b: number): number => a + b;
+console.log(add(2, 3));
+`);
+        inputEditor.clearSelection();
+
+        // Toggle between JavaScript and TypeScript
+        let isTypeScript = true;
+        const langToggle = document.getElementById('lang-toggle');
+        langToggle.addEventListener('click', () => {
+            isTypeScript = !isTypeScript;
+            if (isTypeScript) {
+                inputEditor.session.setMode("ace/mode/typescript");
+                langToggle.innerHTML = '<i class="fa fa-language"></i><span>TypeScript</span>';
+            } else {
+                inputEditor.session.setMode("ace/mode/javascript");
+                langToggle.innerHTML = '<i class="fa fa-language"></i><span>JavaScript</span>';
+            }
+            showNotification(`Switched to ${isTypeScript ? 'TypeScript' : 'JavaScript'}`, 'info');
+        });
+
+        // File upload handling
+        const fileUpload = document.getElementById('file-upload');
+        fileUpload.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+
+            // Update language mode based on file extension
+            if (file.name.endsWith('.ts')) {
+                isTypeScript = true;
+                inputEditor.session.setMode("ace/mode/typescript");
+                langToggle.innerHTML = '<i class="fa fa-language"></i><span>TypeScript</span>';
+            } else {
+                isTypeScript = false;
+                inputEditor.session.setMode("ace/mode/javascript");
+                langToggle.innerHTML = '<i class="fa fa-language"></i><span>JavaScript</span>';
+            }
+
+            // Read file content
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                inputEditor.setValue(event.target.result);
+                inputEditor.clearSelection();
+                updateCharacterCount();
+                showNotification(`File loaded: ${file.name}`, 'success');
+            };
+            reader.readAsText(file);
+        });
+
+        // Clear input
+        document.getElementById('clear-input').addEventListener('click', () => {
+            inputEditor.setValue('');
+            updateCharacterCount();
+            showNotification('Input cleared', 'info');
+        });
+
+        // Clear output
+        document.getElementById('clear-output').addEventListener('click', () => {
+            outputEditor.setValue('');
+            document.getElementById('output-status').innerHTML = '<span class="text-gray-500">Ready</span>';
+            resetSizeStats();
+            showNotification('Output cleared', 'info');
+        });
+
+        // Copy output to clipboard
+        document.getElementById('copy-output').addEventListener('click', () => {
+            const code = outputEditor.getValue();
+            if (!code) {
+                showNotification('Nothing to copy', 'warning');
+                return;
+            }
+
+            navigator.clipboard.writeText(code).then(() => {
+                showNotification('Code copied to clipboard', 'success');
+            }).catch(err => {
+                showNotification('Failed to copy code', 'error');
+                console.error('Could not copy text: ', err);
+            });
+        });
+
+        // Download output as file
+        document.getElementById('download-output').addEventListener('click', () => {
+            const code = outputEditor.getValue();
+            if (!code) {
+                showNotification('Nothing to download', 'warning');
+                return;
+            }
+
+            const blob = new Blob([code], { type: 'text/javascript' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'transformed-code.js';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            showNotification('File downloaded', 'success');
+        });
+
+        // Update character count
+        function updateCharacterCount() {
+            const count = inputEditor.getValue().length;
+            document.getElementById('input-characters').textContent = `${count} characters`;
+        }
+
+        // Reset size statistics
+        function resetSizeStats() {
+            document.getElementById('original-size').textContent = '0 KB';
+            document.getElementById('es5-size').textContent = '0 KB';
+            document.getElementById('minified-size').textContent = '0 KB';
+        }
+
+        // Update size statistics
+        function updateSizeStats(original, es5, minified) {
+            const formatSize = (bytes) => {
+                if (bytes < 1024) return `${bytes} B`;
+                return `${(bytes / 1024).toFixed(2)} KB`;
+            };
+
+            document.getElementById('original-size').textContent = formatSize(original);
+            document.getElementById('es5-size').textContent = formatSize(es5);
+            document.getElementById('minified-size').textContent = formatSize(minified);
+        }
+
+        // Show notification
+        function showNotification(message, type = 'info') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+
+            // Set notification style based on type
+            notification.className = 'fixed bottom-4 right-4 p-4 rounded-lg shadow-lg transform translate-y-0 opacity-100 transition-all duration-300 max-w-sm';
+
+            switch (type) {
+                case 'success':
+                    notification.classList.add('bg-success', 'text-white');
+                    break;
+                case 'error':
+                    notification.classList.add('bg-danger', 'text-white');
+                    break;
+                case 'warning':
+                    notification.classList.add('bg-warning', 'text-white');
+                    break;
+                default:
+                    notification.classList.add('bg-primary', 'text-white');
+            }
+
+            // Hide notification after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('translate-y-0', 'opacity-100');
+                notification.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // Transformation function
+        function transformCode() {
+            const code = inputEditor.getValue();
+            if (!code.trim()) {
+                showNotification('Please enter some code first', 'warning');
+                return;
+            }
+
+            // Show progress
+            document.getElementById('input-status').classList.remove('hidden');
+            document.getElementById('input-status-text').textContent = 'Transforming...';
+            document.getElementById('output-status').innerHTML = '<span class="text-primary">Transforming...</span>';
+
+            // Update progress bar
+            let progress = 0;
+            const progressBar = document.getElementById('input-progress');
+            const progressInterval = setInterval(() => {
+                progress += 5;
+                progressBar.style.width = `${progress}%`;
+                if (progress >= 100) clearInterval(progressInterval);
+            }, 50);
+
+            try {
+                // Calculate original size
+                const originalSize = new TextEncoder().encode(code).length;
+
+                // Babel transformation with filename parameter to fix the error
+                let es5Code;
+                const filename = isTypeScript ? 'input.ts' : 'input.js';
+
+                if (isTypeScript) {
+                    // Transform TypeScript to ES5
+                    es5Code = Babel.transform(code, {
+                        filename: filename,
+                        presets: ['typescript','react','es2015'],
+                        plugins: ['transform-classes']
+                    }).code;
+                } else {
+                    // Transform JavaScript (ES6+) to ES5
+                    es5Code = Babel.transform(code, {
+                        filename: filename,
+                        presets: ['react','es2015'],
+                        plugins: ['transform-classes']
+                    }).code;
+                }
+
+                // Calculate ES5 size
+                const es5Size = new TextEncoder().encode(es5Code).length;
+
+                const minifiedCode = ug(es5Code);
+
+
+                // Calculate minified size
+                const minifiedSize = new TextEncoder().encode(minifiedCode).length;
+
+                // Update output
+                outputEditor.setValue(minifiedCode);
+                outputEditor.clearSelection();
+
+                // Update status and stats
+                document.getElementById('output-status').innerHTML = '<span class="text-success">Completed</span>';
+                updateSizeStats(originalSize, es5Size, minifiedSize);
+                showNotification('Code transformed successfully', 'success');
+
+            } catch (error) {
+                console.error('Transformation error:', error);
+                outputEditor.setValue(`// Transformation error:\n${error.message}`);
+                document.getElementById('output-status').innerHTML = '<span class="text-danger">Error</span>';
+                showNotification('Transformation failed: ' + error.message, 'error');
+            } finally {
+                // Complete progress
+                clearInterval(progressInterval);
+                progressBar.style.width = '100%';
+
+                // Hide progress after short delay
+                setTimeout(() => {
+                    document.getElementById('input-status').classList.add('hidden');
+                    progressBar.style.width = '0';
+                }, 1000);
+            }
+        }
+
+        // Transform button click
+        document.getElementById('transform-btn').addEventListener('click', transformCode);
+
+        // Help modal
+        const helpModal = document.getElementById('help-modal');
+        document.getElementById('help-btn').addEventListener('click', () => {
+            helpModal.classList.remove('hidden');
+            helpModal.classList.add('flex');
+        });
+
+        document.getElementById('close-help').addEventListener('click', () => {
+            helpModal.classList.add('hidden');
+            helpModal.classList.remove('flex');
+        });
+
+        // Close modal when clicking outside
+        helpModal.addEventListener('click', (e) => {
+            if (e.target === helpModal) {
+                helpModal.classList.add('hidden');
+                helpModal.classList.remove('flex');
+            }
+        });
+
+        // Theme toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        // Check for saved theme preference or use system preference
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        } else {
+            html.classList.remove('dark');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            // Save preference
+            if (html.classList.contains('dark')) {
+                localStorage.theme = 'dark';
+            } else {
+                localStorage.theme = 'light';
+            }
+        });
+
+        // Update character count on input
+        inputEditor.on('change', updateCharacterCount);
+
+        // Initialize character count
+        updateCharacterCount();
+    </script>
+</body>
+
+</html>
