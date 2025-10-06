@@ -1,0 +1,1933 @@
+<!DOCTYPE html>
+<!-- saved from url=(0063)https://7th.rhythmdoctor.top/assets/tool-1750862465178/doc.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADOFAI NoEffect</title>
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #10b981;
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --container-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --warning-color: #f59e0b;
+            --hover-color: #2563eb;
+            --disabled-color: #94a3b8;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 1.1rem;
+        }
+
+        .card {
+            background: var(--container-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px var(--shadow-color);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 15px -3px var(--shadow-color);
+        }
+
+        .card-header {
+            padding: 20px 24px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-content {
+            padding: 24px;
+        }
+
+        .radio-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+        }
+
+        .radio-item label {
+            padding: 8px 12px;
+            font-size: 0.875rem;
+        }
+
+        .radio-item {
+            position: relative;
+        }
+
+        .radio-item input {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .radio-item label {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .radio-item input:checked+label {
+            border-color: var(--secondary-color);
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--secondary-color);
+        }
+
+        .radio-item label::before {
+            content: '';
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            margin-right: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .radio-item input:checked+label::before {
+            border-color: var(--secondary-color);
+            background-color: var(--secondary-color);
+            box-shadow: inset 0 0 0 3px white;
+        }
+
+        .custom-preset-section {
+            margin-top: 16px;
+            padding: 16px;
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            display: none;
+        }
+
+        .custom-preset-section.active {
+            display: block;
+            border-color: var(--secondary-color);
+            background-color: rgba(16, 185, 129, 0.05);
+        }
+
+        .preset-upload {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .preset-info {
+            padding: 12px;
+            background: #f8fafc;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        .preset-editor {
+            margin-top: 16px;
+        }
+
+        .editor-section {
+            margin-bottom: 20px;
+        }
+
+        .editor-section h4 {
+            margin-bottom: 12px;
+            font-size: 1rem;
+            color: var(--text-color);
+        }
+
+        .filter-type {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .filter-type label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 8px;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 12px;
+        }
+
+        .event-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+        }
+
+        .event-item input[type="checkbox"] {
+            margin: 0;
+        }
+
+        .event-item label {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .file-list {
+            max-height: 400px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px;
+            background: #f8fafc;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .file-item:hover {
+            background: #f1f5f9;
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .file-icon {
+            font-size: 1.25rem;
+            color: #64748b;
+        }
+
+        .file-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .file-name {
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .file-size {
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        .file-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .status-pending {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        .status-processing {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .status-completed {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .file-actions {
+            display: flex;
+            gap: 8px;
+            margin-left: 16px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: var(--hover-color);
+            transform: translateY(-1px);
+        }
+
+        .btn-success {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-success:hover:not(:disabled) {
+            background: #059669;
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+
+        .btn-outline:hover:not(:disabled) {
+            background: #f8fafc;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.75rem;
+        }
+
+        .btn-danger {
+            color: var(--error-color);
+            border-color: #fecaca;
+        }
+
+        .btn-danger:hover:not(:disabled) {
+            background: #fef2f2;
+        }
+
+        .progress-container {
+            margin-bottom: 20px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .batch-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .batch-actions .btn {
+            flex: 1;
+            min-width: 200px;
+            justify-content: center;
+            padding: 12px 20px;
+            font-size: 1rem;
+        }
+
+        .alert {
+            padding: 16px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .alert-warning {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fde68a;
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .stats {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .stat-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border: 1px solid var(--border-color);
+        }
+
+        .instructions {
+            font-size: 0.875rem;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .instructions ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .instructions li {
+            padding: 4px 0;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .instructions li::before {
+            content: '•';
+            color: var(--primary-color);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        @media (max-width: 768px) {
+            .radio-group {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+
+            .radio-item label {
+                padding: 6px 8px;
+                font-size: 0.75rem;
+            }
+
+            .batch-actions {
+                flex-direction: column;
+            }
+
+            .batch-actions .btn {
+                min-width: auto;
+            }
+
+            .file-item {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+
+            .file-actions {
+                margin-left: 0;
+                justify-content: flex-end;
+            }
+
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .icon {
+            width: 1em;
+            height: 1em;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ADOFAI NoEffect</h1>
+            <p>支持批量处理多个ADOFAI谱面文件，包含自定义预设功能</p>
+        </div>
+
+        <div id="mainContent">
+            <!-- 特效类型选择 -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">选择去特效类型</h2>
+                </div>
+                <div class="card-content">
+                    <div class="radio-group" id="effectTypeGroup">
+                        <div class="radio-item">
+                            <input type="radio" id="noeffect" name="effectType" value="preset_noeffect" checked="">
+                            <label for="noeffect">去常规特效</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="noeffect_completely" name="effectType" value="preset_noeffect_completely">
+                            <label for="noeffect_completely">完全去特效</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="noholds" name="effectType" value="preset_noholds">
+                            <label for="noholds">去长按</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="nomovecamera" name="effectType" value="preset_nomovecamera">
+                            <label for="nomovecamera">去运镜</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="custom" name="effectType" value="custom">
+                            <label for="custom">自定义预设</label>
+                        </div>
+                    </div>
+
+                    <!-- 自定义预设区域 -->
+                    <div class="custom-preset-section" id="customPresetSection">
+                        <div class="preset-upload">
+                            <button class="btn btn-outline btn-sm" id="importPresetBtn">📁 导入预设</button>
+                            <button class="btn btn-outline btn-sm" id="exportPresetBtn">💾 导出预设</button>
+                            <span class="preset-info" id="presetInfo">使用下方编辑器创建预设或导入JSON文件</span>
+                        </div>
+                        <input type="file" id="presetFileInput" accept=".json" style="display: none;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 预设编辑器 -->
+            <div class="card" id="presetEditorCard" style="display: none;">
+                <div class="card-header">
+                    <h2 class="card-title">🛠️ 预设编辑器</h2>
+                </div>
+                <div class="card-content">
+                    <div class="preset-editor">
+                        <div class="editor-section">
+                            <h4>过滤类型</h4>
+                            <div class="filter-type">
+                                <label>
+                                    <input type="radio" name="filterType" value="exclude" checked="">
+                                    黑名单 (排除选中的事件)
+                                </label>
+                                <label>
+                                    <input type="radio" name="filterType" value="include">
+                                    白名单 (只保留选中的事件)
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="editor-section">
+                            <h4>事件列表</h4>
+                            <div class="events-grid" id="eventsGrid"><div class="event-item">
+                    <input type="checkbox" id="event_AddDecoration" value="AddDecoration">
+                    <label for="event_AddDecoration">AddDecoration</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_AddText" value="AddText">
+                    <label for="event_AddText">AddText</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_AddObject" value="AddObject">
+                    <label for="event_AddObject">AddObject</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_SetSpeed" value="SetSpeed">
+                    <label for="event_SetSpeed">SetSpeed</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_Twirl" value="Twirl">
+                    <label for="event_Twirl">Twirl</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_Checkpoint" value="Checkpoint">
+                    <label for="event_Checkpoint">Checkpoint</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_SetHitsound" value="SetHitsound">
+                    <label for="event_SetHitsound">SetHitsound</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_PlaySound" value="PlaySound">
+                    <label for="event_PlaySound">PlaySound</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_SetPlanetRotation" value="SetPlanetRotation">
+                    <label for="event_SetPlanetRotation">SetPlanetRotation</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_Pause" value="Pause">
+                    <label for="event_Pause">Pause</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_AutoPlayTiles" value="AutoPlayTiles">
+                    <label for="event_AutoPlayTiles">AutoPlayTiles</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_ScalePlanets" value="ScalePlanets">
+                    <label for="event_ScalePlanets">ScalePlanets</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_ColorTrack" value="ColorTrack">
+                    <label for="event_ColorTrack">ColorTrack</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_AnimateTrack" value="AnimateTrack">
+                    <label for="event_AnimateTrack">AnimateTrack</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_RecolorTrack" value="RecolorTrack">
+                    <label for="event_RecolorTrack">RecolorTrack</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_MoveTrack" value="MoveTrack">
+                    <label for="event_MoveTrack">MoveTrack</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_PositionTrack" value="PositionTrack">
+                    <label for="event_PositionTrack">PositionTrack</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_MoveDecorations" value="MoveDecorations">
+                    <label for="event_MoveDecorations">MoveDecorations</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_SetText" value="SetText">
+                    <label for="event_SetText">SetText</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_SetObject" value="SetObject">
+                    <label for="event_SetObject">SetObject</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_SetDefaultText" value="SetDefaultText">
+                    <label for="event_SetDefaultText">SetDefaultText</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_CustomBackground" value="CustomBackground">
+                    <label for="event_CustomBackground">CustomBackground</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_Flash" value="Flash">
+                    <label for="event_Flash">Flash</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_MoveCamera" value="MoveCamera">
+                    <label for="event_MoveCamera">MoveCamera</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_SetFilter" value="SetFilter">
+                    <label for="event_SetFilter">SetFilter</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_HallofMirrors" value="HallofMirrors">
+                    <label for="event_HallofMirrors">HallofMirrors</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_ShakeScreen" value="ShakeScreen">
+                    <label for="event_ShakeScreen">ShakeScreen</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_Bloom" value="Bloom">
+                    <label for="event_Bloom">Bloom</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_ScreenTile" value="ScreenTile">
+                    <label for="event_ScreenTile">ScreenTile</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_ScreenScroll" value="ScreenScroll">
+                    <label for="event_ScreenScroll">ScreenScroll</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_SetFrameRate" value="SetFrameRate">
+                    <label for="event_SetFrameRate">SetFrameRate</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_RepeatEvents" value="RepeatEvents">
+                    <label for="event_RepeatEvents">RepeatEvents</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_SetConditionalEvents" value="SetConditionalEvents">
+                    <label for="event_SetConditionalEvents">SetConditionalEvents</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_EditorComment" value="EditorComment">
+                    <label for="event_EditorComment">EditorComment</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_Bookmark" value="Bookmark">
+                    <label for="event_Bookmark">Bookmark</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_Hold" value="Hold">
+                    <label for="event_Hold">Hold</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_SetHoldSound" value="SetHoldSound">
+                    <label for="event_SetHoldSound">SetHoldSound</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_MultiPlanet" value="MultiPlanet">
+                    <label for="event_MultiPlanet">MultiPlanet</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_FreeRoam" value="FreeRoam">
+                    <label for="event_FreeRoam">FreeRoam</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_FreeRoamTwirl" value="FreeRoamTwirl">
+                    <label for="event_FreeRoamTwirl">FreeRoamTwirl</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_FreeRoamRemove" value="FreeRoamRemove">
+                    <label for="event_FreeRoamRemove">FreeRoamRemove</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_Hide" value="Hide">
+                    <label for="event_Hide">Hide</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_ScaleMargin" value="ScaleMargin">
+                    <label for="event_ScaleMargin">ScaleMargin</label>
+                </div><div class="event-item">
+                    <input type="checkbox" id="event_ScaleRadius" value="ScaleRadius">
+                    <label for="event_ScaleRadius">ScaleRadius</label>
+                </div></div>
+                        </div>
+
+                        <div class="editor-section">
+                            <button class="btn btn-primary" id="applyPresetBtn">应用预设</button>
+                            <button class="btn btn-outline" id="clearPresetBtn">清空选择</button>
+                            <button class="btn btn-outline" id="selectAllBtn">全选</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 文件列表 -->
+        <div class="card" id="fileListCard">
+            <div class="card-header">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2 class="card-title">
+                        <span>📄</span>
+                        文件列表 (<span id="fileCount">0</span>)
+                    </h2>
+                    <div class="stats">
+                        <button class="btn btn-primary btn-sm" id="uploadBtn">
+                            📁 选择文件
+                        </button>
+                        <span class="stat-badge" id="pendingCount">0 待处理</span>
+                        <span class="stat-badge" id="completedCount">0 已完成</span>
+                        <span class="stat-badge" id="errorCount" style="display: none;">0 失败</span>
+                        <button class="btn btn-outline btn-sm btn-danger" id="clearAllBtn">
+                            🗑️ 清空
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-content">
+                <div class="file-list" id="fileList">
+                    <div class="upload-drop-zone" id="uploadDropZone" style="display: flex; align-items: center; justify-content: center; padding: 40px; border: 2px dashed var(--border-color); border-radius: 8px; color: #64748b; font-size: 0.875rem;">
+                        拖拽文件到此处或点击上方"选择文件"按钮
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 批量操作 -->
+        <div class="card" id="batchActionsCard" style="display: none;">
+            <div class="card-content">
+                <div class="progress-container" id="progressContainer" style="display: none;">
+                    <div class="progress-header">
+                        <span>批量处理进度</span>
+                        <span id="progressText">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+                    </div>
+                </div>
+                <div class="batch-actions">
+                    <button class="btn btn-primary" id="processAllBtn" disabled="">
+                        ▶️ 处理全部 (0)
+                    </button>
+                    <button class="btn btn-success" id="downloadAllBtn" disabled="">
+                        ⬇️ 下载全部 (0)
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <input type="file" id="fileInput" multiple="" accept=".adofai,application/json,.jsonc,.hjson" style="display: none;">
+
+        <!-- 错误提示 -->
+        <div class="alert alert-error" id="errorAlert" style="display: none;">
+            <span>⚠️</span>
+            <span id="errorMessage"></span>
+        </div>
+
+        <!-- 库加载提示 -->
+        <div class="alert alert-warning" id="libraryAlert" style="display: none;">
+            <span>⏳</span>
+            <span>正在加载ADOFAI处理库，请稍候...</span>
+        </div>
+    </div>
+
+    <script id="adf_parser">
+    class ADOFAIXAttachment {
+  static parse(text, reviver) {
+    if (text == null) return null
+
+    const result = new Parser(text).parseValue()
+
+    // Apply reviver function if provided (similar to JSON.parse)
+    if (typeof reviver === "function") {
+      return this._applyReviver("", result, reviver)
+    }
+
+    return result
+  }
+
+  static parsePartially(text, upToSection, reviver) {
+    if (text == null) return null
+
+    const result = new Parser(text, upToSection).parseValue()
+
+    if (typeof reviver === "function") {
+      return this._applyReviver("", result, reviver)
+    }
+
+    return result
+  }
+
+  static stringify(value, replacer, space) {
+    const serializer = new Serializer(replacer, space)
+    return serializer.serialize(value)
+  }
+
+  // Helper method for reviver function
+  static _applyReviver(key, value, reviver) {
+    if (value && typeof value === "object") {
+      if (Array.isArray(value)) {
+        for (let i = 0; i < value.length; i++) {
+          value[i] = this._applyReviver(i.toString(), value[i], reviver)
+        }
+      } else {
+        for (const prop in value) {
+          if (value.hasOwnProperty(prop)) {
+            value[prop] = this._applyReviver(prop, value[prop], reviver)
+          }
+        }
+      }
+    }
+    return reviver(key, value)
+  }
+}
+
+class Parser {
+  static WHITE_SPACE = " \t\n\r\uFEFF"
+  static WORD_BREAK = ' \t\n\r{}[],:"'
+
+  static TOKEN = {
+    NONE: 0,
+    CURLY_OPEN: 1,
+    CURLY_CLOSE: 2,
+    SQUARED_OPEN: 3,
+    SQUARED_CLOSE: 4,
+    COLON: 5,
+    COMMA: 6,
+    STRING: 7,
+    NUMBER: 8,
+    TRUE: 9,
+    FALSE: 10,
+    NULL: 11,
+  }
+
+  constructor(jsonString, endSection = null) {
+    this.json = jsonString
+    this.position = 0
+    this.endSection = endSection
+
+    // Skip BOM if present
+    if (this.peek() === 0xfeff) {
+      this.read()
+    }
+  }
+
+  parseValue() {
+    return this.parseByToken(this.nextToken)
+  }
+
+  parseObject() {
+    const obj = {}
+    this.read() // consume '{'
+
+    while (true) {
+      let nextToken
+      do {
+        nextToken = this.nextToken
+        if (nextToken === Parser.TOKEN.NONE) {
+          return null
+        }
+        if (nextToken === Parser.TOKEN.CURLY_CLOSE) {
+          return obj
+        }
+      } while (nextToken === Parser.TOKEN.COMMA)
+
+      const key = this.parseString()
+      if (key === null) {
+        return null
+      }
+
+      if (this.nextToken !== Parser.TOKEN.COLON) {
+        return null
+      }
+
+      if (this.endSection == null || key !== this.endSection) {
+        this.read() // consume ':'
+        obj[key] = this.parseValue()
+      } else {
+        return obj
+      }
+    }
+  }
+
+  parseArray() {
+    const array = []
+    this.read() // consume '['
+
+    let parsing = true
+    while (parsing) {
+      const nextToken = this.nextToken
+
+      switch (nextToken) {
+        case Parser.TOKEN.NONE:
+          return null
+        case Parser.TOKEN.SQUARED_CLOSE:
+          parsing = false
+          break
+        case Parser.TOKEN.COMMA:
+          break
+        default:
+          const value = this.parseByToken(nextToken)
+          array.push(value)
+          break
+      }
+    }
+
+    return array
+  }
+
+  parseByToken(token) {
+    switch (token) {
+      case Parser.TOKEN.CURLY_OPEN:
+        return this.parseObject()
+      case Parser.TOKEN.SQUARED_OPEN:
+        return this.parseArray()
+      case Parser.TOKEN.STRING:
+        return this.parseString()
+      case Parser.TOKEN.NUMBER:
+        return this.parseNumber()
+      case Parser.TOKEN.TRUE:
+        return true
+      case Parser.TOKEN.FALSE:
+        return false
+      case Parser.TOKEN.NULL:
+        return null
+      default:
+        return null
+    }
+  }
+
+  parseString() {
+    let result = ""
+    this.read() // consume opening quote
+
+    let parsing = true
+    while (parsing) {
+      if (this.peek() === -1) {
+        break
+      }
+
+      const char = this.nextChar
+      switch (char) {
+        case '"':
+          parsing = false
+          break
+        case "\\":
+          if (this.peek() === -1) {
+            parsing = false
+            break
+          }
+
+          const escaped = this.nextChar
+          switch (escaped) {
+            case '"':
+            case "/":
+            case "\\":
+              result += escaped
+              break
+            case "b":
+              result += "\b"
+              break
+            case "f":
+              result += "\f"
+              break
+            case "n":
+              result += "\n"
+              break
+            case "r":
+              result += "\r"
+              break
+            case "t":
+              result += "\t"
+              break
+            case "u":
+              let unicode = ""
+              for (let i = 0; i < 4; i++) {
+                unicode += this.nextChar
+              }
+              result += String.fromCharCode(Number.parseInt(unicode, 16))
+              break
+          }
+          break
+        default:
+          result += char
+          break
+      }
+    }
+
+    return result
+  }
+
+  parseNumber() {
+    const word = this.nextWord
+
+    if (word.indexOf(".") === -1) {
+      return Number.parseInt(word, 10) || 0
+    } else {
+      return Number.parseFloat(word) || 0.0
+    }
+  }
+
+  eatWhitespace() {
+    while (Parser.WHITE_SPACE.indexOf(this.peekChar) !== -1) {
+      this.read()
+      if (this.peek() === -1) {
+        break
+      }
+    }
+  }
+
+  peek() {
+    if (this.position >= this.json.length) {
+      return -1
+    }
+    return this.json.charCodeAt(this.position)
+  }
+
+  read() {
+    if (this.position >= this.json.length) {
+      return -1
+    }
+    return this.json.charCodeAt(this.position++)
+  }
+
+  get peekChar() {
+    const code = this.peek()
+    return code === -1 ? "\0" : String.fromCharCode(code)
+  }
+
+  get nextChar() {
+    const code = this.read()
+    return code === -1 ? "\0" : String.fromCharCode(code)
+  }
+
+  get nextWord() {
+    let result = ""
+
+    while (Parser.WORD_BREAK.indexOf(this.peekChar) === -1) {
+      result += this.nextChar
+      if (this.peek() === -1) {
+        break
+      }
+    }
+
+    return result
+  }
+
+  get nextToken() {
+    this.eatWhitespace()
+
+    if (this.peek() === -1) {
+      return Parser.TOKEN.NONE
+    }
+
+    const char = this.peekChar
+    switch (char) {
+      case '"':
+        return Parser.TOKEN.STRING
+      case ",":
+        this.read()
+        return Parser.TOKEN.COMMA
+      case "-":
+      case "0":
+      case "1":
+      case "2":
+      case "3":
+      case "4":
+      case "5":
+      case "6":
+      case "7":
+      case "8":
+      case "9":
+        return Parser.TOKEN.NUMBER
+      case ":":
+        return Parser.TOKEN.COLON
+      case "[":
+        return Parser.TOKEN.SQUARED_OPEN
+      case "]":
+        this.read()
+        return Parser.TOKEN.SQUARED_CLOSE
+      case "{":
+        return Parser.TOKEN.CURLY_OPEN
+      case "}":
+        this.read()
+        return Parser.TOKEN.CURLY_CLOSE
+      default:
+        const word = this.nextWord
+        switch (word) {
+          case "false":
+            return Parser.TOKEN.FALSE
+          case "true":
+            return Parser.TOKEN.TRUE
+          case "null":
+            return Parser.TOKEN.NULL
+          default:
+            return Parser.TOKEN.NONE
+        }
+    }
+  }
+}
+
+class Serializer {
+  constructor(replacer = null, space = null) {
+    this.result = ""
+    this.replacer = replacer
+    this.space = space
+    this.indent = 0
+    this.indentStr = ""
+
+    // Process space parameter
+    if (typeof space === "number") {
+      this.indentStr = " ".repeat(Math.min(10, Math.max(0, space)))
+    } else if (typeof space === "string") {
+      this.indentStr = space.slice(0, 10)
+    }
+  }
+
+  serialize(obj) {
+    this.serializeValue(obj, "")
+    return this.result
+  }
+
+  serializeValue(value, key = "") {
+    // Apply replacer function if provided
+    if (typeof this.replacer === "function") {
+      value = this.replacer(key, value)
+    }
+
+    if (value === null || value === undefined) {
+      this.result += "null"
+    } else if (typeof value === "string") {
+      this.serializeString(value)
+    } else if (typeof value === "boolean") {
+      this.result += value.toString()
+    } else if (Array.isArray(value)) {
+      this.serializeArray(value)
+    } else if (typeof value === "object") {
+      this.serializeObject(value)
+    } else {
+      this.serializeOther(value)
+    }
+  }
+
+  serializeObject(obj) {
+    let first = true
+    this.result += "{"
+
+    if (this.indentStr) {
+      this.result += "\n"
+      this.indent++
+    }
+
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        // Skip if replacer array is provided and key is not included
+        if (Array.isArray(this.replacer) && !this.replacer.includes(key)) {
+          continue
+        }
+
+        if (!first) {
+          this.result += ","
+          if (this.indentStr) this.result += "\n"
+        }
+
+        if (this.indentStr) {
+          this.result += this.indentStr.repeat(this.indent)
+        }
+
+        this.serializeString(key.toString())
+        this.result += ":"
+        if (this.indentStr) this.result += " "
+
+        this.serializeValue(obj[key], key)
+        first = false
+      }
+    }
+
+    if (this.indentStr) {
+      this.result += "\n"
+      this.indent--
+      this.result += this.indentStr.repeat(this.indent)
+    }
+
+    this.result += "}"
+  }
+
+  serializeArray(array) {
+    this.result += "["
+
+    if (this.indentStr && array.length > 0) {
+      this.result += "\n"
+      this.indent++
+    }
+
+    let first = true
+    for (let i = 0; i < array.length; i++) {
+      if (!first) {
+        this.result += ","
+        if (this.indentStr) this.result += "\n"
+      }
+
+      if (this.indentStr) {
+        this.result += this.indentStr.repeat(this.indent)
+      }
+
+      this.serializeValue(array[i], i.toString())
+      first = false
+    }
+
+    if (this.indentStr && array.length > 0) {
+      this.result += "\n"
+      this.indent--
+      this.result += this.indentStr.repeat(this.indent)
+    }
+
+    this.result += "]"
+  }
+
+  serializeString(str) {
+    this.result += '"'
+
+    for (const char of str) {
+      switch (char) {
+        case "\b":
+          this.result += "\\b"
+          break
+        case "\t":
+          this.result += "\\t"
+          break
+        case "\n":
+          this.result += "\\n"
+          break
+        case "\f":
+          this.result += "\\f"
+          break
+        case "\r":
+          this.result += "\\r"
+          break
+        case '"':
+          this.result += '\\"'
+          break
+        case "\\":
+          this.result += "\\\\"
+          break
+        default:
+          const code = char.charCodeAt(0)
+          if (code >= 32 && code <= 126) {
+            this.result += char
+          } else {
+            this.result += "\\u" + code.toString(16).padStart(4, "0")
+          }
+          break
+      }
+    }
+
+    this.result += '"'
+  }
+
+  serializeOther(value) {
+    if (typeof value === "number") {
+      if (isFinite(value)) {
+        this.result += value.toString()
+      } else {
+        this.result += "null"
+      }
+    } else {
+      this.serializeString(value.toString())
+    }
+  }
+}
+
+// Export for use
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = ADOFAIXAttachment
+} else if (typeof window !== "undefined") {
+  window.ADOFAIX = ADOFAIXAttachment
+}
+
+    </script>
+    <script class="ADOFAIJS">
+        /*! For license information please see adofai.min.js.LICENSE.txt */
+        !function (t, e) { "object" == typeof exports && "object" == typeof module ? module.exports = e() : "function" == typeof define && define.amd ? define([], e) : "object" == typeof exports ? exports.ADOFAI = e() : t.ADOFAI = e() }(this, (() => (() => { "use strict"; var t = { d: (e, r) => { for (var n in r) t.o(r, n) && !t.o(e, n) && Object.defineProperty(e, n, { enumerable: !0, get: r[n] }) }, o: (t, e) => Object.prototype.hasOwnProperty.call(t, e), r: t => { "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(t, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(t, "__esModule", { value: !0 }) } }, e = {}; t.r(e), t.d(e, { Level: () => G, Parser: () => u, Presets: () => r, pathData: () => i }); var r = {}; t.r(r), t.d(r, { preset_inner_no_deco: () => g, preset_noeffect: () => p, preset_noeffect_completely: () => d, preset_noholds: () => y, preset_nomovecamera: () => v }); var n = { R: 0, p: 15, J: 30, E: 45, T: 60, o: 75, U: 90, q: 105, G: 120, Q: 135, H: 150, W: 165, L: 180, x: 195, N: 210, Z: 225, F: 240, V: 255, D: 270, Y: 285, B: 300, C: 315, M: 330, A: 345, 5: 555, 6: 666, 7: 777, 8: 888, "!": 999 }; const i = { pathDataTable: n, parseToangleData: function (t) { var e = Array.from(String(t)); return e.map((function (t) { return n[t] })) } }; function o(t) { return o = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (t) { return typeof t } : function (t) { return t && "function" == typeof Symbol && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t }, o(t) } function a(t, e) { for (var r = 0; r < e.length; r++) { var n = e[r]; n.enumerable = n.enumerable || !1, n.configurable = !0, "value" in n && (n.writable = !0), Object.defineProperty(t, c(n.key), n) } } function c(t) { var e = function (t) { if ("object" != o(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var r = e.call(t, "string"); if ("object" != o(r)) return r; throw new TypeError("@@toPrimitive must return a primitive value.") } return String(t) }(t); return "symbol" == o(e) ? e : e + "" } const u = function () { function t() { !function (t, e) { if (!(t instanceof e)) throw new TypeError("Cannot call a class as a function") }(this, t) } return e = t, r = [{ key: "parseError", value: function (t) { var e = t.replace(/^\uFEFF/, ""); return e.replaceAll("\n\\n", "\\n").replace(/,(\s*[}\]])/g, "$1").replace(/,\s*}/g, "}").replace(/,\s*]/g, "]").replace(/(\{[^{}]*?)(,)(?=\s*?(\{|\[))/g, "$1").replace(' "decorations"', ',"decorations"').replace(",,", ",") } }, { key: "parseAsObject", value: function (e, r) { return (void 0 === r || "null" == typeof r ? JSON : r).parse(t.parseAsText(e)) } }, { key: "parseAsText", value: function (t) { return this.parseError(t) } }], null && a(e.prototype, null), r && a(e, r), Object.defineProperty(e, "prototype", { writable: !1 }), e; var e, r }(); function s(t) { return s = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (t) { return typeof t } : function (t) { return t && "function" == typeof Symbol && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t }, s(t) } function l(t) { var e = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : 0, r = arguments.length > 2 && void 0 !== arguments[2] && arguments[2]; if ("object" !== s(t) || null === t) return JSON.stringify(t); if (Array.isArray(t)) { if (t.every((function (t) { return "object" !== s(t) || null === t }))) return "[" + t.map((function (t) { return l(t) })).join(",") + "]"; var n = " ".repeat(e); return "[\n" + t.map((function (t) { return n + "  " + f(t) })).join(",\n") + "\n" + n + "]" } var i = " ".repeat(e), o = Object.keys(t); return r ? "{\n" + o.map((function (e) { return "  " + JSON.stringify(e) + ": " + l(t[e], 2) })).join(",\n") + "\n}" : "{\n" + o.map((function (r) { return i + "  " + JSON.stringify(r) + ": " + l(t[r], e + 2) })).join(",\n") + "\n" + i + "}" } function f(t) { return "object" !== s(t) || null === t ? l(t) : Array.isArray(t) ? "[" + t.map(f).join(",") + "]" : "{" + Object.keys(t).map((function (e) { return JSON.stringify(e) + ": " + f(t[e]) })).join(", ") + "}" } const h = l; var p = { type: "exclude", events: ["Flash", "SetFilter", "SetFilterAdvanced", "HallOfMirrors", "Bloom", "ScalePlanets", "ScreenTile", "ScreenScroll", "ShakeScreen"] }, y = { type: "exclude", events: ["Hold"] }, v = { type: "exclude", events: ["MoveCamera"] }, d = { type: "exclude", events: ["AddDecoration", "AddText", "AddObject", "Checkpoint", "SetHitsound", "PlaySound", "SetPlanetRotation", "ScalePlanets", "ColorTrack", "AnimateTrack", "RecolorTrack", "MoveTrack", "PositionTrack", "MoveDecorations", "SetText", "SetObject", "SetDefaultText", "CustomBackground", "Flash", "MoveCamera", "SetFilter", "HallOfMirrors", "ShakeScreen", "Bloom", "ScreenTile", "ScreenScroll", "SetFrameRate", "RepeatEvents", "SetConditionalEvents", "EditorComment", "Bookmark", "Hold", "SetHoldSound", "Hide", "ScaleMargin", "ScaleRadius"] }, g = { type: "special", events: ["MoveDecorations", "SetText", "SetObject", "SetDefaultText"] }; function b(t) { return b = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (t) { return typeof t } : function (t) { return t && "function" == typeof Symbol && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t }, b(t) } function m(t, e) { var r = Object.keys(t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(t); e && (n = n.filter((function (e) { return Object.getOwnPropertyDescriptor(t, e).enumerable }))), r.push.apply(r, n) } return r } function w(t) { for (var e = 1; e < arguments.length; e++) { var r = null != arguments[e] ? arguments[e] : {}; e % 2 ? m(Object(r), !0).forEach((function (e) { O(t, e, r[e]) })) : Object.getOwnPropertyDescriptors ? Object.defineProperties(t, Object.getOwnPropertyDescriptors(r)) : m(Object(r)).forEach((function (e) { Object.defineProperty(t, e, Object.getOwnPropertyDescriptor(r, e)) })) } return t } function O(t, e, r) { return (e = function (t) { var e = function (t) { if ("object" != b(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var r = e.call(t, "string"); if ("object" != b(r)) return r; throw new TypeError("@@toPrimitive must return a primitive value.") } return String(t) }(t); return "symbol" == b(e) ? e : e + "" }(e)) in t ? Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }) : t[e] = r, t } const _ = function (t) { if (!Array.isArray(t)) throw new Error("Arguments are not supported."); return t.map((function (t) { var e = w({}, t); return e.hasOwnProperty("addDecorations") && (e.addDecorations = []), Array.isArray(e.actions) && (e.actions = e.actions.filter((function (t) { return !g.events.includes(t.eventType) }))), e })) }, S = function (t, e) { return e.map((function (e) { var r = w({}, e); return Array.isArray(r.actions) && (r.actions = r.actions.filter((function (e) { return !t.includes(e.eventType) }))), r })) }, j = function (t, e) { return e.map((function (e) { var r = w({}, e); return Array.isArray(r.actions) && (r.actions = r.actions.filter((function (e) { return t.includes(e.eventType) }))), r })) }; var k = ["floor"], D = ["floor"]; function x(t, e) { (null == e || e > t.length) && (e = t.length); for (var r = 0, n = Array(e); r < e; r++)n[r] = t[r]; return n } function A(t, e) { var r = Object.keys(t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(t); e && (n = n.filter((function (e) { return Object.getOwnPropertyDescriptor(t, e).enumerable }))), r.push.apply(r, n) } return r } function E(t) { for (var e = 1; e < arguments.length; e++) { var r = null != arguments[e] ? arguments[e] : {}; e % 2 ? A(Object(r), !0).forEach((function (e) { P(t, e, r[e]) })) : Object.getOwnPropertyDescriptors ? Object.defineProperties(t, Object.getOwnPropertyDescriptors(r)) : A(Object(r)).forEach((function (e) { Object.defineProperty(t, e, Object.getOwnPropertyDescriptor(r, e)) })) } return t } function P(t, e, r) { return (e = B(e)) in t ? Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }) : t[e] = r, t } function T(t, e) { if (null == t) return {}; var r, n, i = function (t, e) { if (null == t) return {}; var r = {}; for (var n in t) if ({}.hasOwnProperty.call(t, n)) { if (-1 !== e.indexOf(n)) continue; r[n] = t[n] } return r }(t, e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(t); for (n = 0; n < o.length; n++)r = o[n], -1 === e.indexOf(r) && {}.propertyIsEnumerable.call(t, r) && (i[r] = t[r]) } return i } function F() { F = function () { return e }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, i = "function" == typeof Symbol ? Symbol : {}, o = i.iterator || "@@iterator", a = i.asyncIterator || "@@asyncIterator", c = i.toStringTag || "@@toStringTag"; function u(t, e, r, n) { return Object.defineProperty(t, e, { value: r, enumerable: !n, configurable: !n, writable: !n }) } try { u({}, "") } catch (t) { u = function (t, e, r) { return t[e] = r } } function s(e, r, n, i) { var o = r && r.prototype instanceof h ? r : h, a = Object.create(o.prototype); return u(a, "_invoke", function (e, r, n) { var i = 1; return function (o, a) { if (3 === i) throw Error("Generator is already running"); if (4 === i) { if ("throw" === o) throw a; return { value: t, done: !0 } } for (n.method = o, n.arg = a; ;) { var c = n.delegate; if (c) { var u = O(c, n); if (u) { if (u === f) continue; return u } } if ("next" === n.method) n.sent = n._sent = n.arg; else if ("throw" === n.method) { if (1 === i) throw i = 4, n.arg; n.dispatchException(n.arg) } else "return" === n.method && n.abrupt("return", n.arg); i = 3; var s = l(e, r, n); if ("normal" === s.type) { if (i = n.done ? 4 : 2, s.arg === f) continue; return { value: s.arg, done: n.done } } "throw" === s.type && (i = 4, n.method = "throw", n.arg = s.arg) } } }(e, n, new j(i || [])), !0), a } function l(t, e, r) { try { return { type: "normal", arg: t.call(e, r) } } catch (t) { return { type: "throw", arg: t } } } e.wrap = s; var f = {}; function h() { } function p() { } function y() { } var v = {}; u(v, o, (function () { return this })); var d = Object.getPrototypeOf, g = d && d(d(k([]))); g && g !== r && n.call(g, o) && (v = g); var b = y.prototype = h.prototype = Object.create(v); function m(t) { ["next", "throw", "return"].forEach((function (e) { u(t, e, (function (t) { return this._invoke(e, t) })) })) } function w(t, e) { function r(i, o, a, c) { var u = l(t[i], t, o); if ("throw" !== u.type) { var s = u.arg, f = s.value; return f && "object" == C(f) && n.call(f, "__await") ? e.resolve(f.__await).then((function (t) { r("next", t, a, c) }), (function (t) { r("throw", t, a, c) })) : e.resolve(f).then((function (t) { s.value = t, a(s) }), (function (t) { return r("throw", t, a, c) })) } c(u.arg) } var i; u(this, "_invoke", (function (t, n) { function o() { return new e((function (e, i) { r(t, n, e, i) })) } return i = i ? i.then(o, o) : o() }), !0) } function O(e, r) { var n = r.method, i = e.i[n]; if (i === t) return r.delegate = null, "throw" === n && e.i.return && (r.method = "return", r.arg = t, O(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), f; var o = l(i, e.i, r.arg); if ("throw" === o.type) return r.method = "throw", r.arg = o.arg, r.delegate = null, f; var a = o.arg; return a ? a.done ? (r[e.r] = a.value, r.next = e.n, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, f) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, f) } function _(t) { this.tryEntries.push(t) } function S(e) { var r = e[4] || {}; r.type = "normal", r.arg = t, e[4] = r } function j(t) { this.tryEntries = [[-1]], t.forEach(_, this), this.reset(!0) } function k(e) { if (null != e) { var r = e[o]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var i = -1, a = function r() { for (; ++i < e.length;)if (n.call(e, i)) return r.value = e[i], r.done = !1, r; return r.value = t, r.done = !0, r }; return a.next = a } } throw new TypeError(C(e) + " is not iterable") } return p.prototype = y, u(b, "constructor", y), u(y, "constructor", p), p.displayName = u(y, c, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === p || "GeneratorFunction" === (e.displayName || e.name)) }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, y) : (t.__proto__ = y, u(t, c, "GeneratorFunction")), t.prototype = Object.create(b), t }, e.awrap = function (t) { return { __await: t } }, m(w.prototype), u(w.prototype, a, (function () { return this })), e.AsyncIterator = w, e.async = function (t, r, n, i, o) { void 0 === o && (o = Promise); var a = new w(s(t, r, n, i), o); return e.isGeneratorFunction(r) ? a : a.next().then((function (t) { return t.done ? t.value : a.next() })) }, m(b), u(b, c, "Generator"), u(b, o, (function () { return this })), u(b, "toString", (function () { return "[object Generator]" })), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.unshift(n); return function t() { for (; r.length;)if ((n = r.pop()) in e) return t.value = n, t.done = !1, t; return t.done = !0, t } }, e.values = k, j.prototype = { constructor: j, reset: function (e) { if (this.prev = this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(S), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t) }, stop: function () { this.done = !0; var t = this.tryEntries[0][4]; if ("throw" === t.type) throw t.arg; return this.rval }, dispatchException: function (e) { if (this.done) throw e; var r = this; function n(t) { a.type = "throw", a.arg = e, r.next = t } for (var i = r.tryEntries.length - 1; i >= 0; --i) { var o = this.tryEntries[i], a = o[4], c = this.prev, u = o[1], s = o[2]; if (-1 === o[0]) return n("end"), !1; if (!u && !s) throw Error("try statement without catch or finally"); if (null != o[0] && o[0] <= c) { if (c < u) return this.method = "next", this.arg = t, n(u), !0; if (c < s) return n(s), !1 } } }, abrupt: function (t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var n = this.tryEntries[r]; if (n[0] > -1 && n[0] <= this.prev && this.prev < n[2]) { var i = n; break } } i && ("break" === t || "continue" === t) && i[0] <= e && e <= i[2] && (i = null); var o = i ? i[4] : {}; return o.type = t, o.arg = e, i ? (this.method = "next", this.next = i[2], f) : this.complete(o) }, complete: function (t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), f }, finish: function (t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r[2] === t) return this.complete(r[4], r[3]), S(r), f } }, catch: function (t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r[0] === t) { var n = r[4]; if ("throw" === n.type) { var i = n.arg; S(r) } return i } } throw Error("illegal catch attempt") }, delegateYield: function (e, r, n) { return this.delegate = { i: k(e), r, n }, "next" === this.method && (this.arg = t), f } }, e } function C(t) { return C = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (t) { return typeof t } : function (t) { return t && "function" == typeof Symbol && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t }, C(t) } function M(t, e, r, n, i, o, a) { try { var c = t[o](a), u = c.value } catch (t) { return void r(t) } c.done ? e(u) : Promise.resolve(u).then(n, i) } function N(t) { return function () { var e = this, r = arguments; return new Promise((function (n, i) { var o = t.apply(e, r); function a(t) { M(o, n, i, a, c, "next", t) } function c(t) { M(o, n, i, a, c, "throw", t) } a(void 0) })) } } function I(t, e) { for (var r = 0; r < e.length; r++) { var n = e[r]; n.enumerable = n.enumerable || !1, n.configurable = !0, "value" in n && (n.writable = !0), Object.defineProperty(t, B(n.key), n) } } function B(t) { var e = function (t) { if ("object" != C(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var r = e.call(t, "string"); if ("object" != C(r)) return r; throw new TypeError("@@toPrimitive must return a primitive value.") } return String(t) }(t); return "symbol" == C(e) ? e : e + "" } const G = function () { return t = function t(e, r) { !function (t, e) { if (!(t instanceof e)) throw new TypeError("Cannot call a class as a function") }(this, t), this._events = new Map, this.guidCallbacks = new Map, this.guidCounter = 0, this._options = e, this._provider = r }, e = [{ key: "generateGUID", value: function () { return "event_".concat(Date.now(), "_").concat(this.guidCounter++, "_").concat(Math.floor(1e3 * Math.random())) } }, { key: "load", value: (o = N(F().mark((function t() { var e, r; return F().wrap((function (t) { for (; ;)switch (t.prev = t.next) { case 0: e = this._options, t.t0 = C(e), t.next = "string" === t.t0 ? 4 : "object" === t.t0 ? 6 : 8; break; case 4: return r = u.parseAsObject(e, this._provider), t.abrupt("break", 9); case 6: return r = Object.assign({}, e), t.abrupt("break", 9); case 8: throw new Error("Options must be String or Object", e); case 9: if (!("pathData" in r)) { t.next = 13; break } this.angleData = i.parseToangleData(r.pathData), t.next = 18; break; case 13: if (!("angleData" in r)) { t.next = 17; break } this.angleData = r.angleData, t.next = 18; break; case 17: throw new Error("There is not any angle datas.", r); case 18: if (this.actions = "actions" in r ? r.actions : [], !("settings" in r)) { t.next = 23; break } this.settings = r.settings, t.next = 24; break; case 23: throw new Error("There is no ADOFAI settings.", r); case 24: return this.__decorations = "decorations" in r ? r.decorations : [], this.tiles = [], this._angleDir = -180, this._twirlCount = 0, t.next = 30, this._createArray(this.angleData.length, { angleData: this.angleData, actions: this.actions, decorations: this.__decorations }); case 30: this.tiles = t.sent, this.trigger("load", this); case 32: case "end": return t.stop() } }), t, this) }))), function () { return o.apply(this, arguments) }) }, { key: "on", value: function (t, e) { this._events.has(t) || this._events.set(t, []); var r = this.generateGUID(); return this._events.get(t).push({ guid: r, callback: e }), this.guidCallbacks.set(r, { eventName: t, callback: e }), r } }, { key: "trigger", value: function (t) { for (var e = arguments.length, r = new Array(e > 1 ? e - 1 : 0), n = 1; n < e; n++)r[n - 1] = arguments[n]; this._events.has(t) && this._events.get(t).forEach((function (t) { t.callback.apply(void 0, r) })) } }, { key: "off", value: function (t) { if (!this.guidCallbacks.has(t)) return !1; var e = this.guidCallbacks.get(t), r = e.eventName, n = e.callback; if (this._events.has(r)) { var i = this._events.get(r); this._events.set(r, i.filter((function (e) { var r = e.guid, i = e.callback; return r !== t && i !== n }))) } return this.guidCallbacks.delete(t), !0 } }, { key: "offEvent", value: function (t) { var e = this; this._events.has(t) && (this._events.get(t).forEach((function (t) { var r = t.guid; e.guidCallbacks.delete(r) })), this._events.delete(t)) } }, { key: "_filterByFloor", value: function (t, e) { var r = t.filter((function (t) { return t.floor === e })); return this._twirlCount += r.filter((function (t) { return "Twirl" == t.eventType })).length, r.map((function (t) { return t.floor, T(t, k) })) } }, { key: "_filterByFloorwithDeco", value: function (t, e) { return t.filter((function (t) { return t.floor === e })).map((function (t) { return t.floor, T(t, D) })) } }, { key: "_createArray", value: (n = N(F().mark((function t(e, r) { var n, i = this; return F().wrap((function (t) { for (; ;)switch (t.prev = t.next) { case 0: return n = Array.from({ length: e }, (function (t, e) { return { direction: r.angleData[e], _lastdir: r.angleData[e - 1] || 0, actions: i._filterByFloor(r.actions, e), angle: i._parseAngle(r.angleData, e, i._twirlCount % 2), addDecorations: i._filterByFloorwithDeco(r.decorations, e), twirl: i._twirlCount } })), t.abrupt("return", n); case 2: case "end": return t.stop() } }), t) }))), function (t, e) { return n.apply(this, arguments) }) }, { key: "_changeAngle", value: function () { var t = this, e = 0; return this.tiles.map((function (r) { return e++, r.angle = t._parsechangedAngle(r.direction, e, r.twirl, r._lastdir), r })) } }, { key: "_parsechangedAngle", value: function (t, e, r, n) { var i = 0; return 0 == e && (this._angleDir = 180), 999 == t ? (this._angleDir = n, NaN == this._angleDir && (this._angleDir = 0), i = 0) : (0 == (i = 0 === r ? (this._angleDir - t) % 360 : 360 - (this._angleDir - t) % 360) && (i = 360), this._angleDir = t + 180), i } }, { key: "_parseAngle", value: function (t, e, r) { var n = 0; return 0 == e && (this._angleDir = 180), 999 == t[e] ? (this._angleDir = t[e - 1], NaN == this._angleDir && (this._angleDir = 0), n = 0) : (0 == (n = 0 === r ? (this._angleDir - t[e]) % 360 : 360 - (this._angleDir - t[e]) % 360) && (n = 360), this._angleDir = t[e] + 180), n } }, { key: "_flattenActionsWithFloor", value: function (t) { return t.flatMap((function (t, e) { return (t.actions || []).map((function (t) { return E({ floor: e }, t) })) })) } }, { key: "_flattenAngleDatas", value: function (t) { return t.flatMap((function (t) { return t.direction })) } }, { key: "_flattenDecorationsWithFloor", value: function (t) { return t.flatMap((function (t, e) { return (t.addDecorations || []).map((function (t) { return E({ floor: e }, t) })) })) } }, { key: "filterActionsByEventType", value: function (t) { return Object.entries(this.tiles).flatMap((function (t) { var e = function (t, e) { return function (t) { if (Array.isArray(t)) return t }(t) || function (t, e) { var r = null == t ? null : "undefined" != typeof Symbol && t[Symbol.iterator] || t["@@iterator"]; if (null != r) { var n, i, o, a, c = [], u = !0, s = !1; try { if (o = (r = r.call(t)).next, 0 === e) { if (Object(r) !== r) return; u = !1 } else for (; !(u = (n = o.call(r)).done) && (c.push(n.value), c.length !== e); u = !0); } catch (t) { s = !0, i = t } finally { try { if (!u && null != r.return && (a = r.return(), Object(a) !== a)) return } finally { if (s) throw i } } return c } }(t, e) || function (t, e) { if (t) { if ("string" == typeof t) return x(t, e); var r = {}.toString.call(t).slice(8, -1); return "Object" === r && t.constructor && (r = t.constructor.name), "Map" === r || "Set" === r ? Array.from(t) : "Arguments" === r || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(r) ? x(t, e) : void 0 } }(t, e) || function () { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.") }() }(t, 2), r = e[0]; return (e[1].actions || []).map((function (t) { return { b: t, index: r } })) })).filter((function (e) { return e.b.eventType === t })).map((function (t) { var e = t.b, r = t.index; return { index: Number(r), action: e } })) } }, { key: "calculateTileCoordinates", value: function () { var t = this, e = 0, r = 0; Object.values(this.tiles).forEach((function (n, i) { var o, a = n.direction; 999 == n.direction && (a = null === (o = t.tiles[i - 2]) || void 0 === o ? void 0 : o.direction); var c = a * Math.PI / 180, u = Math.cos(c), s = Math.sin(c); e += u, r += s, n.position = [Number(e.toFixed(8)), Number(r.toFixed(8))] })) } }, { key: "getActionsByIndex", value: function (t, e) { var r = this.filterActionsByEventType(t).filter((function (t) { return t.index === e })); return { count: r.length, actions: r.map((function (t) { return t.action })) } } }, { key: "floorOperation", value: function () { var t = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : { type: "append", direction: 0 }; switch (t.type) { case "append": this.tiles.push({ direction: t.direction, angle: 0, actions: [], _lastdir: this.tiles[this.tiles.length - 1].direction, addDecorations: [], twirl: this.tiles[this.tiles.length - 1].twirl }); break; case "insert": this.tiles.splice(t.id, 0, { direction: t.direction, angle: 0, actions: [], addDecorations: [], _lastdir: this.tiles[t.id - 1].direction, twirl: this.tiles[t.id - 1].twirl }); break; case "delete": this.tiles.splice(t.id, 1); break; default: return }this._changeAngle() } }, { key: "appendFloor", value: function (t) { this.tiles.push({ direction: t.direction, angle: 0, actions: [], addDecorations: [], _lastdir: this.tiles[this.tiles.length - 1].direction, twirl: this.tiles[this.tiles.length - 1].twirl }), this._changeAngle() } }, { key: "clearDeco", value: function () { return this.tiles = _(this.tiles), !0 } }, { key: "clearEffect", value: function (t) { this.clearEvent(r[t]) } }, { key: "clearEvent", value: function (t) { switch (t.type) { case "include": this.tiles = j(t.events, this.tiles); break; case "exclude": this.tiles = S(t.events, this.tiles) } } }, { key: "export", value: function (t, e) { var r = !(arguments.length > 2 && void 0 !== arguments[2]) || arguments[2], n = { angleData: this._flattenAngleDatas(this.tiles), settings: this.settings, actions: this._flattenActionsWithFloor(this.tiles), decorations: this._flattenDecorationsWithFloor(this.tiles) }; return "object" == t ? n : h(n, e, r) } }], e && I(t.prototype, e), Object.defineProperty(t, "prototype", { writable: !1 }), t; var t, e, n, o }(); return e })()));
+    </script>
+
+    <script class="Hjson">
+        /*!
+ * Hjson v3.2.1
+ * https://hjson.github.io
+ *
+ * Copyright 2014-2017 Christian Zangl, MIT license
+ * Details and documentation:
+ * https://github.com/hjson/hjson-js
+ *
+ * This code is based on the the JSON version by Douglas Crockford:
+ * https://github.com/douglascrockford/JSON-js (json_parse.js, json2.js)
+ */
+        !function (n) { if ("object" == typeof exports && "undefined" != typeof module) module.exports = n(); else if ("function" == typeof define && define.amd) define([], n); else { var r; r = "undefined" != typeof window ? window : "undefined" != typeof global ? global : "undefined" != typeof self ? self : this, r.Hjson = n() } }(function () {
+            return function () { function n(r, e, t) { function o(a, s) { if (!e[a]) { if (!r[a]) { var u = "function" == typeof require && require; if (!s && u) return u(a, !0); if (i) return i(a, !0); var f = new Error("Cannot find module '" + a + "'"); throw f.code = "MODULE_NOT_FOUND", f } var c = e[a] = { exports: {} }; r[a][0].call(c.exports, function (n) { return o(r[a][1][n] || n) }, c, c.exports, n, r, e, t) } return e[a].exports } for (var i = "function" == typeof require && require, a = 0; a < t.length; a++)o(t[a]); return o } return n }()({
+                1: [function (n, r, e) { "use strict"; function t(n, r, e) { var t; return n && (t = { b: n }), r && ((t = t || {}).a = r), e && ((t = t || {}).x = e), t } function o(n, r) { if (null !== n && "object" == typeof n) { var e = h.getComment(n); e && h.removeComment(n); var i, a, u, f; if ("[object Array]" === Object.prototype.toString.apply(n)) { for (f = { a: {} }, i = 0, a = n.length; i < a; i++)s(f.a, i, e.a[i], o(n[i])) && (u = !0); !u && e.e && (f.e = t(e.e[0], e.e[1]), u = !0) } else { f = { s: {} }; var c, l = Object.keys(n); for (e && e.o ? (c = [], e.o.concat(l).forEach(function (r) { Object.prototype.hasOwnProperty.call(n, r) && c.indexOf(r) < 0 && c.push(r) })) : c = l, f.o = c, i = 0, a = c.length; i < a; i++) { var p = c[i]; s(f.s, p, e.c[p], o(n[p])) && (u = !0) } !u && e.e && (f.e = t(e.e[0], e.e[1]), u = !0) } return r && e && e.r && (f.r = t(e.r[0], e.r[1])), u ? f : void 0 } } function i() { var n = ""; return [].forEach.call(arguments, function (r) { r && "" !== r.trim() && (n && (n += "; "), n += r.trim()) }), n } function a(n, r) { var e = []; if (c(n, r, e, []), e.length > 0) { var t = l(r, null, 1); t += "\n# Orphaned comments:\n", e.forEach(function (n) { t += ("# " + n.path.join("/") + ": " + i(n.b, n.a, n.e)).replace("\n", "\\n ") + "\n" }), l(r, t, 1) } } function s(n, r, e, o) { var i = t(e ? e[0] : void 0, e ? e[1] : void 0, o); return i && (n[r] = i), i } function u(n, r) { var e = t(r.b, r.a); return e.path = n, e } function f(n, r, e) { if (n) { var t, o; if (n.a) for (t = 0, o = n.a.length; t < o; t++) { var i = e.slice().concat([t]), a = n.a[t]; a && (r.push(u(i, a)), f(a.x, r, i)) } else n.o && n.o.forEach(function (t) { var o = e.slice().concat([t]), i = n.s[t]; i && (r.push(u(o, i)), f(i.x, r, o)) }); n.e && r.push(u(e, n.e)) } } function c(n, r, e, t) { if (n) { if (null === r || "object" != typeof r) return void f(n, e, t); var o, i = h.createComment(r); if (0 === t.length && n.r && (i.r = [n.r.b, n.r.a]), "[object Array]" === Object.prototype.toString.apply(r)) { i.a = []; var a = n.a || {}; for (var s in a) if (a.hasOwnProperty(s)) { o = parseInt(s); var l = n.a[s]; if (l) { var p = t.slice().concat([o]); o < r.length ? (i.a[o] = [l.b, l.a], c(l.x, r[o], e, p)) : (e.push(u(p, l)), f(l.x, e, p)) } } 0 === o && n.e && (i.e = [n.e.b, n.e.a]) } else i.c = {}, i.o = [], (n.o || []).forEach(function (o) { var a = t.slice().concat([o]), s = n.s[o]; Object.prototype.hasOwnProperty.call(r, o) ? (i.o.push(o), s && (i.c[o] = [s.b, s.a], c(s.x, r[o], e, a))) : s && (e.push(u(a, s)), f(s.x, e, a)) }), n.e && (i.e = [n.e.b, n.e.a]) } } function l(n, r, e) { var t = h.createComment(n, h.getComment(n)); return t.r || (t.r = ["", ""]), (r || "" === r) && (t.r[e] = h.forceComment(r)), t.r[e] || "" } var h = n("./hjson-common"); r.exports = { extract: function (n) { return o(n, !0) }, merge: a, header: function (n, r) { return l(n, r, 0) }, footer: function (n, r) { return l(n, r, 1) } } }, { "./hjson-common": 2 }], 2: [function (n, r, e) { "use strict"; function t(n, r) { function e() { return o = n.charAt(u), u++, o } var t, o, i = "", a = 0, s = !0, u = 0; for (e(), "-" === o && (i = "-", e()); o >= "0" && o <= "9";)s && ("0" == o ? a++ : s = !1), i += o, e(); if (s && a--, "." === o) for (i += "."; e() && o >= "0" && o <= "9";)i += o; if ("e" === o || "E" === o) for (i += o, e(), "-" !== o && "+" !== o || (i += o, e()); o >= "0" && o <= "9";)i += o, e(); for (; o && o <= " ";)e(); return r && ("," !== o && "}" !== o && "]" !== o && "#" !== o && ("/" !== o || "/" !== n[u] && "*" !== n[u]) || (o = 0)), t = +i, o || a || !isFinite(t) ? void 0 : t } function o(n, r) { return Object.defineProperty && Object.defineProperty(n, "__COMMENTS__", { enumerable: !1, writable: !0 }), n.__COMMENTS__ = r || {} } function i(n) { Object.defineProperty(n, "__COMMENTS__", { value: void 0 }) } function a(n) { return n.__COMMENTS__ } function s(n) { if (!n) return ""; var r, e, t, o, i = n.split("\n"); for (t = 0; t < i.length; t++)for (r = i[t], o = r.length, e = 0; e < o; e++) { var a = r[e]; if ("#" === a) break; if ("/" === a && ("/" === r[e + 1] || "*" === r[e + 1])) { "*" === r[e + 1] && (t = i.length); break } if (a > " ") { i[t] = "# " + r; break } } return i.join("\n") } var u = n("os"); r.exports = { EOL: u.EOL || "\n", tryParseNumber: t, createComment: o, removeComment: i, getComment: a, forceComment: s } }, { os: 8 }], 3: [function (n, r, e) { "use strict"; function t(n, r) { function e(n) { return "[object Function]" === {}.toString.call(n) } if ("[object Array]" !== Object.prototype.toString.apply(n)) { if (n) throw new Error("dsf option must contain an array!"); return i } if (0 === n.length) return i; var t = []; return n.forEach(function (n) { if (!n.name || !e(n.parse) || !e(n.stringify)) throw new Error("extension does not match the DSF interface"); t.push(function () { try { if ("parse" == r) return n.parse.apply(null, arguments); if ("stringify" == r) { var e = n.stringify.apply(null, arguments); if (void 0 !== e && ("string" != typeof e || 0 === e.length || '"' === e[0] || [].some.call(e, function (n) { return a(n) }))) throw new Error("value may not be empty, start with a quote or contain a punctuator character except colon: " + e); return e } throw new Error("Invalid type") } catch (r) { throw new Error("DSF-" + n.name + " failed; " + r.message) } }) }), o.bind(null, t) } function o(n, r) { if (n) for (var e = 0; e < n.length; e++) { var t = n[e](r); if (void 0 !== t) return t } } function i() { } function a(n) { return "{" === n || "}" === n || "[" === n || "]" === n || "," === n } function s() { return { name: "math", parse: function (n) { switch (n) { case "+inf": case "inf": case "+Inf": case "Inf": return 1 / 0; case "-inf": case "-Inf": return -1 / 0; case "nan": case "NaN": return NaN } }, stringify: function (n) { if ("number" == typeof n) return 1 / n == -1 / 0 ? "-0" : n === 1 / 0 ? "Inf" : n === -1 / 0 ? "-Inf" : isNaN(n) ? "NaN" : void 0 } } } function u(n) { var r = n && n.out; return { name: "hex", parse: function (n) { if (/^0x[0-9A-Fa-f]+$/.test(n)) return parseInt(n, 16) }, stringify: function (n) { if (r && Number.isInteger(n)) return "0x" + n.toString(16) } } } function f() { return { name: "date", parse: function (n) { if (/^\d{4}-\d{2}-\d{2}$/.test(n) || /^\d{4}-\d{2}-\d{2}T\d{2}\:\d{2}\:\d{2}(?:.\d+)(?:Z|[+-]\d{2}:\d{2})$/.test(n)) { var r = Date.parse(n); if (!isNaN(r)) return new Date(r) } }, stringify: function (n) { if ("[object Date]" === Object.prototype.toString.call(n)) { var r = n.toISOString(); return -1 !== r.indexOf("T00:00:00.000Z", r.length - 14) ? r.substr(0, 10) : r } } } } s.description = "support for Inf/inf, -Inf/-inf, Nan/naN and -0", u.description = "parse hexadecimal numbers prefixed with 0x", f.description = "support ISO dates", r.exports = { loadDsf: t, std: { math: s, hex: u, date: f } } }, {}], 4: [function (n, r, e) { "use strict"; r.exports = function (r, e) { function t() { j = 0, w = " " } function o(n) { return "{" === n || "}" === n || "[" === n || "]" === n || "," === n || ":" === n } function i(n) { var r, e = 0, t = 1; for (r = j - 1; r > 0 && "\n" !== b[r]; r--, e++); for (; r > 0; r--)"\n" === b[r] && t++; throw new Error(n + " at line " + t + "," + e + " >>>" + b.substr(j - e, 20) + " ...") } function a() { return w = b.charAt(j), j++, w } function s(n) { return b.charAt(j + n) } function u(n) { for (var r = "", e = w; a();) { if (w === e) return a(), n && "'" === e && "'" === w && 0 === r.length ? (a(), f()) : r; if ("\\" === w) if (a(), "u" === w) { for (var t = 0, o = 0; o < 4; o++) { a(); var s, u = w.charCodeAt(0); w >= "0" && w <= "9" ? s = u - 48 : w >= "a" && w <= "f" ? s = u - 97 + 10 : w >= "A" && w <= "F" ? s = u - 65 + 10 : i("Bad \\u char " + w), t = 16 * t + s } r += String.fromCharCode(t) } else { if ("string" != typeof C[w]) break; r += C[w] } else "\n" === w || "\r" === w ? i("Bad string containing newline") : r += w } i("Bad string") } function f() { function n() { for (var n = t; w && w <= " " && "\n" !== w && n-- > 0;)a() } for (var r = "", e = 0, t = 0; ;) { var o = s(-t - 5); if (!o || "\n" === o) break; t++ } for (; w && w <= " " && "\n" !== w;)a(); for ("\n" === w && (a(), n()); ;) { if (w) { if ("'" === w) { if (e++, a(), 3 === e) return "\n" === r.slice(-1) && (r = r.slice(0, -1)), r; continue } for (; e > 0;)r += "'", e-- } else i("Bad multiline string"); "\n" === w ? (r += "\n", a(), n()) : ("\r" !== w && (r += w), a()) } } function c() { if ('"' === w || "'" === w) return u(!1); for (var n = "", r = j, e = -1; ;) { if (":" === w) return n ? e >= 0 && e !== n.length && (j = r + e, i("Found whitespace in your key name (use quotes to include)")) : i("Found ':' but no key name (for an empty key name use quotes)"), n; w <= " " ? w ? e < 0 && (e = n.length) : i("Found EOF while looking for a key name (check your syntax)") : o(w) ? i("Found '" + w + "' where a key name was expected (check your syntax or use quotes if the key name includes {}[],: or whitespace)") : n += w, a() } } function l() { for (; w;) { for (; w && w <= " ";)a(); if ("#" === w || "/" === w && "/" === s(0)) for (; w && "\n" !== w;)a(); else { if ("/" !== w || "*" !== s(0)) break; for (a(), a(); w && ("*" !== w || "/" !== s(0));)a(); w && (a(), a()) } } } function h() { var n = w; for (o(w) && i("Found a punctuator character '" + w + "' when expecting a quoteless string (check your syntax)"); ;) { a(); var r = "\r" === w || "\n" === w || "" === w; if (r || "," === w || "}" === w || "]" === w || "#" === w || "/" === w && ("/" === s(0) || "*" === s(0))) { var e = n[0]; switch (e) { case "f": if ("false" === n.trim()) return !1; break; case "n": if ("null" === n.trim()) return null; break; case "t": if ("true" === n.trim()) return !0; break; default: if ("-" === e || e >= "0" && e <= "9") { var t = k.tryParseNumber(n); if (void 0 !== t) return t } }if (r) { n = n.trim(); var u = O(n); return void 0 !== u ? u : n } } n += w } } function p(n, r) { var e; for (n--, e = j - 2; e > n && b[e] <= " " && "\n" !== b[e]; e--); "\n" === b[e] && e--, "\r" === b[e] && e--; var t = b.substr(n, e - n + 1); for (e = 0; e < t.length; e++)if (t[e] > " ") { var o = t.indexOf("\n"); if (o >= 0) { var i = [t.substr(0, o), t.substr(o + 1)]; return r && 0 === i[0].trim().length && i.shift(), i } return [t] } return [] } function m(n) { function r(n, e) { var t, o, i, a; switch (typeof n) { case "string": n.indexOf(e) >= 0 && (a = n); break; case "object": if ("[object Array]" === Object.prototype.toString.apply(n)) for (t = 0, i = n.length; t < i; t++)a = r(n[t], e) || a; else for (o in n) Object.prototype.hasOwnProperty.call(n, o) && (a = r(n[o], e) || a) }return a } function e(e) { var t = r(n, e); return t ? "found '" + e + "' in a string value, your mistake could be with:\n  > " + t + "\n  (unquoted strings contain everything up to the next line!)" : "" } return e("}") || e("]") } function d() { var n, r, e, t = []; try { if (x && (n = k.createComment(t, { a: [] })), a(), r = j, l(), n && (e = p(r, !0).join("\n")), "]" === w) return a(), n && (n.e = [e]), t; for (; w;) { if (t.push(v()), r = j, l(), "," === w && (a(), r = j, l()), n) { var o = p(r); n.a.push([e || "", o[0] || ""]), e = o[1] } if ("]" === w) return a(), n && (n.a[n.a.length - 1][1] += e || ""), t; l() } i("End of input while parsing an array (missing ']')") } catch (n) { throw n.hint = n.hint || m(t), n } } function g(n) { var r, e, t, o = "", s = {}; try { if (x && (r = k.createComment(s, { c: {}, o: [] })), n ? e = 1 : (a(), e = j), l(), r && (t = p(e, !0).join("\n")), "}" === w && !n) return r && (r.e = [t]), a(), s; for (; w;) { if (o = c(), l(), ":" !== w && i("Expected ':' instead of '" + w + "'"), a(), s[o] = v(), e = j, l(), "," === w && (a(), e = j, l()), r) { var u = p(e); r.c[o] = [t || "", u[0] || ""], t = u[1], r.o.push(o) } if ("}" === w && !n) return a(), r && (r.c[o][1] += t || ""), s; l() } if (n) return s; i("End of input while parsing an object (missing '}')") } catch (n) { throw n.hint = n.hint || m(s), n } } function v() { switch (l(), w) { case "{": return g(); case "[": return d(); case "'": case '"': return u(!0); default: return h() } } function y(n, r) { var e = j; if (l(), w && i("Syntax error, found trailing characters"), x) { var t = r.join("\n"), o = p(e).join("\n"); if (o || t) { k.createComment(n, k.getComment(n)).r = [t, o] } } return n } var b, j, w, x, O, k = n("./hjson-common"), E = n("./hjson-dsf"), C = { '"': '"', "'": "'", "\\": "\\", "/": "/", b: "\b", f: "\f", n: "\n", r: "\r", t: "\t" }; if ("string" != typeof r) throw new Error("source is not a string"); var q = null, S = !0; return e && "object" == typeof e && (x = e.keepWsc, q = e.dsf, S = !1 !== e.legacyRoot), O = E.loadDsf(q, "parse"), b = r, t(), S ? function () { l(); var n = x ? p(1) : null; switch (w) { case "{": return y(g(), n); case "[": return y(d(), n) }try { return y(g(!0), n) } catch (r) { t(); try { return y(v(), n) } catch (n) { throw r } } }() : function () { l(); var n = x ? p(1) : null; switch (w) { case "{": return y(g(), n); case "[": return y(d(), n); default: return y(v(), n) } }() } }, { "./hjson-common": 2, "./hjson-dsf": 3 }], 5: [function (n, r, e) { "use strict"; r.exports = function (r, e) { function t(n, r) { return L += n[0].length + n[1].length - n[2] - n[3], n[0] + r + n[1] } function o(n) { return n.replace(N, function (n) { var r = A[n]; return "string" == typeof r ? t(O.esc, r) : t(O.uni, ("0000" + n.charCodeAt(0).toString(16)).slice(-4)) }) } function i(n, r, e, i) { return n ? (I.lastIndex = 0, F.lastIndex = 0, v || e || I.test(n) || void 0 !== f.tryParseNumber(n, !0) || F.test(n) ? (N.lastIndex = 0, _.lastIndex = 0, N.test(n) ? _.test(n) || i || !b ? t(O.qstr, o(n)) : a(n, r) : t(O.qstr, n)) : t(O.str, n)) : t(O.qstr, "") } function a(n, r) { var e, o = n.replace(/\r/g, "").split("\n"); if (r += p, 1 === o.length) return t(O.mstr, o[0]); var i = h + r + O.mstr[0]; for (e = 0; e < o.length; e++)i += h, o[e] && (i += r + o[e]); return i + h + r + O.mstr[1] } function s(n) { return n ? g || P.test(n) ? (N.lastIndex = 0, t(O.qkey, N.test(n) ? o(n) : n)) : t(O.key, n) : '""' } function u(n, r, e, o) { function a(n) { return n && "\n" === n["\r" === n[0] ? 1 : 0] } function c(n) { return n && !a(n) } function l(n, r, e) { if (!n) return ""; n = f.forceComment(n); var o, i = n.length; for (o = 0; o < i && n[o] <= " "; o++); return e && o > 0 && (n = n.substr(o)), o < i ? r + t(O.rem, n) : n } var g = q(n); if (void 0 !== g) return t(O.dsf, g); switch (typeof n) { case "string": return i(n, D, r, o); case "number": return isFinite(n) ? t(O.num, String(n)) : t(O.lit, "null"); case "boolean": return t(O.lit, String(n)); case "object": if (!n) return t(O.lit, "null"); var w; m && (w = f.getComment(n)); var k = "[object Array]" === Object.prototype.toString.apply(n), E = D; D += p; var C, S, N, I, _, F, A, P, M, T, $ = h + E, R = h + D, B = e || d ? "" : $, W = [], U = y ? [] : null, Z = v, H = b, z = j ? "" : O.com[0], G = 0; if (k) { for (S = 0, N = n.length; S < N; S++) { if (C = S < N - 1, w ? (A = w.a[S] || [], P = c(A[1]), W.push(l(A[0], "\n") + R), U && (A[0] || A[1] || P) && (U = null)) : W.push(R), L = 0, _ = n[S], W.push(u(_, !!w && P, !0) + (C ? j : "")), U) { switch (typeof _) { case "string": L = 0, v = !0, b = 0, U.push(u(_, !1, !0) + (C ? O.com[0] : "")), v = Z, b = H; break; case "object": if (_) { U = null; break } default: U.push(W[W.length - 1] + (C ? z : "")) }C && (L += O.com[0].length - O.com[2]), G += L } w && A[1] && W.push(l(A[1], P ? " " : "\n", P)) } 0 === N ? w && w.e && W.push(l(w.e[0], "\n") + $) : W.push($), 0 === W.length ? M = t(O.arr, "") : (M = B + t(O.arr, W.join("")), U && (T = U.join(" "), T.length - G <= y && (M = t(O.arr, T)))) } else { var J = w ? w.o.slice() : [], K = []; for (I in n) Object.prototype.hasOwnProperty.call(n, I) && J.indexOf(I) < 0 && K.push(I); x && K.sort(); var Q = J.concat(K); for (S = 0, N = Q.length; S < N; S++)if (C = S < N - 1, I = Q[S], w ? (A = w.c[I] || [], P = c(A[1]), W.push(l(A[0], "\n") + R), U && (A[0] || A[1] || P) && (U = null)) : W.push(R), L = 0, _ = n[I], F = u(_, w && P), W.push(s(I) + O.col[0] + (a(F) ? "" : " ") + F + (C ? j : "")), w && A[1] && W.push(l(A[1], P ? " " : "\n", P)), U) { switch (typeof _) { case "string": L = 0, v = !0, b = 0, F = u(_, !1), v = Z, b = H, U.push(s(I) + O.col[0] + " " + F + (C ? O.com[0] : "")); break; case "object": if (_) { U = null; break } default: U.push(W[W.length - 1] + (C ? z : "")) }L += O.col[0].length - O.col[2], C && (L += O.com[0].length - O.com[2]), G += L } 0 === N ? w && w.e && W.push(l(w.e[0], "\n") + $) : W.push($), 0 === W.length ? M = t(O.obj, "") : (M = B + t(O.obj, W.join("")), U && (T = U.join(" "), T.length - G <= y && (M = t(O.obj, T)))) } return D = E, M } } var f = n("./hjson-common"), c = n("./hjson-dsf"), l = { obj: ["{", "}"], arr: ["[", "]"], key: ["", ""], qkey: ['"', '"'], col: [":", ""], com: [",", ""], str: ["", ""], qstr: ['"', '"'], mstr: ["'''", "'''"], num: ["", ""], lit: ["", ""], dsf: ["", ""], esc: ["\\", ""], uni: ["\\u", ""], rem: ["", ""] }, h = f.EOL, p = "  ", m = !1, d = !1, g = !1, v = !1, y = 0, b = 1, j = "", w = null, x = !1, O = l; if (e && "object" == typeof e) { e.quotes = "always" === e.quotes ? "strings" : e.quotes, "\n" !== e.eol && "\r\n" !== e.eol || (h = e.eol), m = e.keepWsc, y = e.condense || 0, d = e.bracesSameLine, g = "all" === e.quotes || "keys" === e.quotes, v = "all" === e.quotes || "strings" === e.quotes || !0 === e.separator, b = v || "off" == e.multiline ? 0 : "no-tabs" == e.multiline ? 2 : 1, j = !0 === e.separator ? O.com[0] : "", w = e.dsf, x = e.sortProps, "number" == typeof e.space ? p = new Array(e.space + 1).join(" ") : "string" == typeof e.space && (p = e.space), !0 === e.colors && (O = { obj: ["[37m{[0m", "[37m}[0m"], arr: ["[37m[[0m", "[37m][0m"], key: ["[33m", "[0m"], qkey: ['[33m"', '"[0m'], col: ["[37m:[0m", ""], com: ["[37m,[0m", ""], str: ["[37;1m", "[0m"], qstr: ['[37;1m"', '"[0m'], mstr: ["[37;1m'''", "'''[0m"], num: ["[36;1m", "[0m"], lit: ["[36m", "[0m"], dsf: ["[37m", "[0m"], esc: ["[31m\\", "[0m"], uni: ["[31m\\u", "[0m"], rem: ["[35m", "[0m"] }); var k, E = Object.keys(l); for (k = E.length - 1; k >= 0; k--) { var C = E[k]; O[C].push(l[C][0].length, l[C][1].length) } } var q, S = "-­؀-؄܏឴឵‌-‏\u2028- ⁠-⁯\ufeff￰-￿", N = new RegExp('[\\\\\\"\0-' + S + "]", "g"), I = new RegExp("^\\s|^\"|^'|^#|^\\/\\*|^\\/\\/|^\\{|^\\}|^\\[|^\\]|^:|^,|\\s$|[\0-" + S + "]", "g"), _ = new RegExp("'''|^[\\s]+$|[\0-" + (2 === b ? "\t" : "\b") + "\v\f-" + S + "]", "g"), F = new RegExp("^(true|false|null)\\s*((,|\\]|\\}|#|//|/\\*).*)?$"), A = { "\b": "b", "\t": "t", "\n": "n", "\f": "f", "\r": "r", '"': '"', "\\": "\\" }, P = /[,\{\[\}\]\s:#"']|\/\/|\/\*/, D = "", L = 0; q = c.loadDsf(w, "stringify"); var M = "", T = m ? T = (f.getComment(r) || {}).r : null; return T && T[0] && (M = T[0] + "\n"), M += u(r, null, !0, !0), T && (M += T[1] || ""), M } }, { "./hjson-common": 2, "./hjson-dsf": 3 }], 6: [function (n, r, e) { r.exports = "3.2.1" }, {}], 7: [function (n, r, e) {/*!
+ * Hjson v3.2.1
+ * https://hjson.github.io
+ *
+ * Copyright 2014-2017 Christian Zangl, MIT license
+ * Details and documentation:
+ * https://github.com/hjson/hjson-js
+ *
+ * This code is based on the the JSON version by Douglas Crockford:
+ * https://github.com/douglascrockford/JSON-js (json_parse.js, json2.js)
+ */
+                    "use strict"; var t = n("./hjson-common"), o = n("./hjson-version"), i = n("./hjson-parse"), a = n("./hjson-stringify"), s = n("./hjson-comments"), u = n("./hjson-dsf"); r.exports = { parse: i, stringify: a, endOfLine: function () { return t.EOL }, setEndOfLine: function (n) { "\n" !== n && "\r\n" !== n || (t.EOL = n) }, version: o, rt: { parse: function (n, r) { return (r = r || {}).keepWsc = !0, i(n, r) }, stringify: function (n, r) { return (r = r || {}).keepWsc = !0, a(n, r) } }, comments: s, dsf: u.std }
+                }, { "./hjson-comments": 1, "./hjson-common": 2, "./hjson-dsf": 3, "./hjson-parse": 4, "./hjson-stringify": 5, "./hjson-version": 6 }], 8: [function (n, r, e) { }, {}]
+            }, {}, [7])(7)
+        });
+
+    </script>
+    <script>
+        // 库加载状态
+        let isLibraryLoaded = false;
+
+        // 加载外部ADOFAI库
+        function loadADOFAILibrary() {
+            if (typeof window !== "undefined" && !window.ADOFAI) {
+                const script = document.createElement("script");
+                script.src = "./adofai.min.js";
+                script.onload = () => {
+                    isLibraryLoaded = true;
+                    libraryAlert.style.display = 'none';
+                };
+                script.onerror = () => {
+                    console.error("Failed to load ADOFAI library");
+                    showError("无法加载处理工具");
+                };
+                document.head.appendChild(script);
+            } else if (window.ADOFAI) {
+                isLibraryLoaded = true;
+                libraryAlert.style.display = 'none';
+            }
+        }
+
+        // 所有ADOFAI事件列表
+        const ALL_EVENTS = [
+            'AddDecoration', 'AddText', 'AddObject', 'SetSpeed', 'Twirl', 'Checkpoint',
+            'SetHitsound', 'PlaySound', 'SetPlanetRotation', 'Pause', 'AutoPlayTiles',
+            'ScalePlanets', 'ColorTrack', 'AnimateTrack', 'RecolorTrack', 'MoveTrack',
+            'PositionTrack', 'MoveDecorations', 'SetText', 'SetObject', 'SetDefaultText',
+            'CustomBackground', 'Flash', 'MoveCamera', 'SetFilter', 'HallofMirrors',
+            'ShakeScreen', 'Bloom', 'ScreenTile', 'ScreenScroll', 'SetFrameRate',
+            'RepeatEvents', 'SetConditionalEvents', 'EditorComment', 'Bookmark', 'Hold',
+            'SetHoldSound', 'MultiPlanet', 'FreeRoam', 'FreeRoamTwirl', 'FreeRoamRemove',
+            'Hide', 'ScaleMargin', 'ScaleRadius'
+        ];
+
+        // 应用状态
+        let files = [];
+        let isProcessing = false;
+        let currentCustomPreset = null;
+
+        // DOM元素
+        const fileInput = document.getElementById('fileInput');
+        const fileListCard = document.getElementById('fileListCard');
+        const fileList = document.getElementById('fileList');
+        const batchActionsCard = document.getElementById('batchActionsCard');
+        const processAllBtn = document.getElementById('processAllBtn');
+        const downloadAllBtn = document.getElementById('downloadAllBtn');
+        const clearAllBtn = document.getElementById('clearAllBtn');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        const errorAlert = document.getElementById('errorAlert');
+        const libraryAlert = document.getElementById('libraryAlert');
+
+        // 预设相关元素
+        const customPresetSection = document.getElementById('customPresetSection');
+        const importPresetBtn = document.getElementById('importPresetBtn');
+        const exportPresetBtn = document.getElementById('exportPresetBtn');
+        const presetFileInput = document.getElementById('presetFileInput');
+        const presetInfo = document.getElementById('presetInfo');
+        const eventsGrid = document.getElementById('eventsGrid');
+        const applyPresetBtn = document.getElementById('applyPresetBtn');
+        const clearPresetBtn = document.getElementById('clearPresetBtn');
+        const selectAllBtn = document.getElementById('selectAllBtn');
+
+        // 统计元素
+        const fileCount = document.getElementById('fileCount');
+        const pendingCount = document.getElementById('pendingCount');
+        const completedCount = document.getElementById('completedCount');
+        const errorCount = document.getElementById('errorCount');
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            loadADOFAILibrary();
+            setupEventListeners();
+            initializeEventsGrid();
+        });
+
+        function setupEventListeners() {
+            // 文件选择
+            fileInput.addEventListener('change', handleFileSelect);
+
+            // 上传按钮点击
+            const uploadBtn = document.getElementById('uploadBtn');
+            uploadBtn.addEventListener('click', () => {
+                fileInput.click();
+            });
+
+            // 拖拽上传
+            const uploadDropZone = document.getElementById('uploadDropZone');
+            uploadDropZone.addEventListener('dragover', handleDragOver);
+            uploadDropZone.addEventListener('dragleave', handleDragLeave);
+            uploadDropZone.addEventListener('drop', handleDrop);
+
+            // 批量操作
+            processAllBtn.addEventListener('click', processAllFiles);
+            downloadAllBtn.addEventListener('click', downloadAllFiles);
+            clearAllBtn.addEventListener('click', clearAllFiles);
+
+            // 特效类型选择
+            document.querySelectorAll('input[name="effectType"]').forEach(radio => {
+                radio.addEventListener('change', handleEffectTypeChange);
+            });
+
+            // 预设相关
+            importPresetBtn.addEventListener('click', () => presetFileInput.click());
+            exportPresetBtn.addEventListener('click', exportPreset);
+            presetFileInput.addEventListener('change', importPreset);
+            applyPresetBtn.addEventListener('click', applyCustomPreset);
+            clearPresetBtn.addEventListener('click', clearPresetSelection);
+            selectAllBtn.addEventListener('click', selectAllEvents);
+        }
+
+        function initializeEventsGrid() {
+            eventsGrid.innerHTML = '';
+            ALL_EVENTS.forEach(event => {
+                const div = document.createElement('div');
+                div.className = 'event-item';
+                div.innerHTML = `
+                    <input type="checkbox" id="event_${event}" value="${event}">
+                    <label for="event_${event}">${event}</label>
+                `;
+                eventsGrid.appendChild(div);
+            });
+        }
+
+        function handleEffectTypeChange(e) {
+            const presetEditorCard = document.getElementById('presetEditorCard');
+            if (e.target.value === 'custom') {
+                customPresetSection.classList.add('active');
+                presetEditorCard.style.display = 'block';
+            } else {
+                customPresetSection.classList.remove('active');
+                presetEditorCard.style.display = 'none';
+            }
+        }
+
+        function importPreset(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const preset = JSON.parse(event.target.result);
+                    if (preset.type && preset.events && Array.isArray(preset.events)) {
+                        loadPresetToEditor(preset);
+                        presetInfo.textContent = `已导入预设: ${preset.type} 模式，${preset.events.length} 个事件`;
+                    } else {
+                        throw new Error('预设格式不正确');
+                    }
+                } catch (error) {
+                    showError('预设文件格式错误: ' + error.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function loadPresetToEditor(preset) {
+            // 设置过滤类型
+            document.querySelector(`input[name="filterType"][value="${preset.type}"]`).checked = true;
+
+            // 清空所有选择
+            document.querySelectorAll('#eventsGrid input[type="checkbox"]').forEach(cb => {
+                cb.checked = false;
+            });
+
+            // 选中预设中的事件
+            preset.events.forEach(event => {
+                const checkbox = document.getElementById(`event_${event}`);
+                if (checkbox) {
+                    checkbox.checked = true;
+                }
+            });
+
+            currentCustomPreset = preset;
+        }
+
+        function exportPreset() {
+            const preset = getCurrentPreset();
+            if (!preset || preset.events.length === 0) {
+                showError('请先选择要导出的事件');
+                return;
+            }
+
+            const blob = new Blob([JSON.stringify(preset, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `adofai_preset_${preset.type}_${new Date().toISOString().slice(0, 10)}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function getCurrentPreset() {
+            const filterType = document.querySelector('input[name="filterType"]:checked').value;
+            const selectedEvents = Array.from(document.querySelectorAll('#eventsGrid input[type="checkbox"]:checked'))
+                .map(cb => cb.value);
+
+            return {
+                type: filterType,
+                events: selectedEvents
+            };
+        }
+
+        function applyCustomPreset() {
+            const preset = getCurrentPreset();
+            if (preset.events.length === 0) {
+                showError('请先选择要处理的事件');
+                return;
+            }
+
+            currentCustomPreset = preset;
+            presetInfo.textContent = `当前预设: ${preset.type} 模式，${preset.events.length} 个事件`;
+
+            // 自动选择自定义预设选项
+            document.getElementById('custom').checked = true;
+            customPresetSection.classList.add('active');
+        }
+
+        function clearPresetSelection() {
+            document.querySelectorAll('#eventsGrid input[type="checkbox"]').forEach(cb => {
+                cb.checked = false;
+            });
+            currentCustomPreset = null;
+            presetInfo.textContent = '使用下方编辑器创建预设或导入JSON文件';
+        }
+
+        function selectAllEvents() {
+            document.querySelectorAll('#eventsGrid input[type="checkbox"]').forEach(cb => {
+                cb.checked = true;
+            });
+        }
+
+        function generateId() {
+            return Math.random().toString(36).substr(2, 9);
+        }
+
+        function handleFileSelect(e) {
+            const selectedFiles = Array.from(e.target.files);
+            if (selectedFiles.length > 0) {
+                addFiles(selectedFiles);
+                e.target.value = '';
+            }
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            const uploadDropZone = document.getElementById('uploadDropZone');
+            if (uploadDropZone) {
+                uploadDropZone.style.borderColor = 'var(--primary-color)';
+                uploadDropZone.style.backgroundColor = 'rgba(59, 130, 246, 0.05)';
+            }
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            const uploadDropZone = document.getElementById('uploadDropZone');
+            if (uploadDropZone) {
+                uploadDropZone.style.borderColor = 'var(--border-color)';
+                uploadDropZone.style.backgroundColor = 'transparent';
+            }
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            const uploadDropZone = document.getElementById('uploadDropZone');
+            if (uploadDropZone) {
+                uploadDropZone.style.borderColor = 'var(--border-color)';
+                uploadDropZone.style.backgroundColor = 'transparent';
+            }
+            const droppedFiles = Array.from(e.dataTransfer.files);
+            addFiles(droppedFiles);
+        }
+
+        function addFiles(newFiles) {
+            const validFiles = newFiles.filter(file =>
+                file.name.endsWith('.adofai') ||
+                file.name.endsWith('.json') ||
+                file.name.endsWith('.jsonc') ||
+                file.name.endsWith('.hjson')
+            );
+
+            const newFileItems = validFiles.map(file => ({
+                id: generateId(),
+                file: file,
+                status: 'pending',
+                processedContent: null,
+                error: null
+            }));
+
+            files = [...files, ...newFileItems];
+            updateUI();
+        }
+
+        function removeFile(id) {
+            files = files.filter(file => file.id !== id);
+            updateUI();
+        }
+
+        function clearAllFiles() {
+            files = [];
+            updateUI();
+        }
+
+        function updateUI() {
+            updateStats();
+            updateFileList();
+            updateBatchActions();
+
+            fileListCard.style.display = 'block';
+
+            if (files.length > 0) {
+                batchActionsCard.style.display = 'block';
+                const uploadDropZone = document.getElementById('uploadDropZone');
+                if (uploadDropZone) {
+                    uploadDropZone.style.display = 'none';
+                }
+            } else {
+                batchActionsCard.style.display = 'none';
+                const uploadDropZone = document.getElementById('uploadDropZone');
+                if (uploadDropZone) {
+                    uploadDropZone.style.display = 'flex';
+                }
+            }
+        }
+
+        function updateStats() {
+            const pending = files.filter(f => f.status === 'pending').length;
+            const completed = files.filter(f => f.status === 'completed').length;
+            const errors = files.filter(f => f.status === 'error').length;
+
+            fileCount.textContent = files.length;
+            pendingCount.textContent = `${pending} 待处理`;
+            completedCount.textContent = `${completed} 已完成`;
+
+            if (errors > 0) {
+                errorCount.textContent = `${errors} 失败`;
+                errorCount.style.display = 'inline';
+            } else {
+                errorCount.style.display = 'none';
+            }
+        }
+
+        function updateFileList() {
+            const existingDropZone = document.getElementById('uploadDropZone');
+            const fileItems = fileList.querySelectorAll('.file-item');
+            fileItems.forEach(item => item.remove());
+
+            files.forEach(fileItem => {
+                const fileElement = createFileElement(fileItem);
+                fileList.appendChild(fileElement);
+            });
+
+            if (files.length === 0 && !existingDropZone) {
+                const uploadDropZone = document.createElement('div');
+                uploadDropZone.className = 'upload-drop-zone';
+                uploadDropZone.id = 'uploadDropZone';
+                uploadDropZone.style.cssText = 'display: flex; align-items: center; justify-content: center; padding: 40px; border: 2px dashed var(--border-color); border-radius: 8px; color: #64748b; font-size: 0.875rem;';
+                uploadDropZone.textContent = '拖拽文件到此处或点击上方"选择文件"按钮';
+                fileList.appendChild(uploadDropZone);
+
+                uploadDropZone.addEventListener('dragover', handleDragOver);
+                uploadDropZone.addEventListener('dragleave', handleDragLeave);
+                uploadDropZone.addEventListener('drop', handleDrop);
+            }
+
+            const uploadDropZone = document.getElementById('uploadDropZone');
+            if (uploadDropZone) {
+                uploadDropZone.style.display = files.length > 0 ? 'none' : 'flex';
+            }
+        }
+
+        function createFileElement(fileItem) {
+            const div = document.createElement('div');
+            div.className = 'file-item';
+
+            const statusClass = `status-${fileItem.status}`;
+            const statusText = getStatusText(fileItem.status);
+
+            div.innerHTML = `
+                <div class="file-info">
+                    <span class="file-icon">📄</span>
+                    <div class="file-details">
+                        <div class="file-name">${fileItem.file.name}</div>
+                        <div class="file-size">${formatBytes(fileItem.file.size)}</div>
+                    </div>
+                    <span class="file-status ${statusClass}">${statusText}</span>
+                </div>
+                <div class="file-actions">
+                    ${fileItem.status === 'pending' ?
+                    `<button class="btn btn-outline btn-sm" onclick="processSingleFile('${fileItem.id}')">▶️</button>` :
+                    ''
+                }
+                    ${fileItem.status === 'completed' ?
+                    `<button class="btn btn-outline btn-sm" onclick="downloadFile('${fileItem.id}')" style="color: var(--success-color);">⬇️</button>` :
+                    ''
+                }
+                    <button class="btn btn-outline btn-sm btn-danger" onclick="removeFile('${fileItem.id}')">❌</button>
+                </div>
+            `;
+
+            return div;
+        }
+
+        function getStatusText(status) {
+            const statusMap = {
+                'pending': '待处理',
+                'processing': '处理中',
+                'completed': '已完成',
+                'error': '处理失败'
+            };
+            return statusMap[status] || '未知状态';
+        }
+
+        function formatBytes(bytes, decimals = 2) {
+            if (bytes === 0) return '0 Bytes';
+
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(decimals)) + ' ' + sizes[i];
+        }
+        
+        function updateBatchActions() {
+            const pending = files.filter(f => f.status === 'pending').length;
+            const completed = files.filter(f => f.status === 'completed').length;
+
+            processAllBtn.disabled = pending === 0 || isProcessing;
+            processAllBtn.innerHTML = isProcessing ?
+                '⏳ 处理中...' :
+                `▶️ 处理全部 (${pending})`;
+
+            downloadAllBtn.disabled = completed === 0;
+            downloadAllBtn.innerHTML = `⬇️ 下载全部 (${completed})`;
+        }
+
+        async function processSingleFile(id) {
+            const fileIndex = files.findIndex(f => f.id === id);
+            if (fileIndex === -1) return;
+
+            files[fileIndex].status = 'processing';
+            updateUI();
+
+            try {
+                const processedContent = await processFile(files[fileIndex]);
+                files[fileIndex].status = 'completed';
+                files[fileIndex].processedContent = processedContent;
+            } catch (error) {
+                files[fileIndex].status = 'error';
+                files[fileIndex].error = error.message;
+                showError(`处理文件 ${files[fileIndex].file.name} 时出错: ${error.message}`);
+            }
+
+            updateUI();
+        }
+
+        async function processAllFiles() {
+            const pendingFiles = files.filter(f => f.status === 'pending');
+            if (pendingFiles.length === 0) return;
+
+            isProcessing = true;
+            progressContainer.style.display = 'block';
+            updateUI();
+
+            for (let i = 0; i < pendingFiles.length; i++) {
+                await processSingleFile(pendingFiles[i].id);
+                const progress = ((i + 1) / pendingFiles.length) * 100;
+                updateProgress(progress);
+            }
+
+            isProcessing = false;
+            progressContainer.style.display = 'none';
+            updateUI();
+        }
+
+        function updateProgress(progress) {
+            progressFill.style.width = `${progress}%`;
+            progressText.textContent = `${Math.round(progress)}%`;
+        }
+
+        async function processFile(fileItem) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    try {
+                        const content = event.target.result;
+                        const selectedEffect = document.querySelector('input[name="effectType"]:checked').value;
+
+                        const adofaiLevel = new ADOFAI.Level(content, ADOFAIX);
+
+                        adofaiLevel.on('load', () => {
+                            try {
+                                if (selectedEffect === 'custom') {
+                                    // 使用自定义预设
+                                    if (currentCustomPreset) {
+                                        adofaiLevel.clearEvent(currentCustomPreset);
+                                    } else {
+                                        throw new Error('请先设置自定义预设');
+                                    }
+                                } else {
+                                    // 使用内置预设
+                                    if (selectedEffect.includes('preset_noeffect')) {
+                                        adofaiLevel.clearDeco();
+                                    }
+                                    adofaiLevel.clearEffect(selectedEffect);
+                                }
+
+                                adofaiLevel.calculateTileCoordinates();
+                                const processedContent = adofaiLevel.export();
+                                resolve(processedContent);
+                            } catch (error) {
+                                reject(new Error(`处理文件时出错: ${error.message}`));
+                            }
+                        });
+
+                        adofaiLevel.load();
+                    } catch (error) {
+                        reject(new Error(`文件解析错误: ${error.message}`));
+                    }
+                };
+
+                reader.onerror = () => reject(new Error('文件读取失败'));
+                reader.readAsText(fileItem.file, 'utf-8');
+            });
+        }
+
+        function downloadFile(id) {
+            const fileItem = files.find(f => f.id === id);
+            if (!fileItem || !fileItem.processedContent) return;
+
+            const blob = new Blob([fileItem.processedContent], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+
+            const originalName = fileItem.file.name;
+            const nameParts = originalName.split('.');
+            const extension = nameParts.pop();
+            const baseName = nameParts.join('.');
+            const outputFilename = `${baseName}_processed.${extension}`;
+
+            a.href = url;
+            a.download = outputFilename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function downloadAllFiles() {
+            const completedFiles = files.filter(f => f.status === 'completed' && f.processedContent);
+            completedFiles.forEach(file => downloadFile(file.id));
+        }
+
+        function showError(message) {
+            document.getElementById('errorMessage').textContent = message;
+            errorAlert.style.display = 'flex';
+            setTimeout(() => {
+                errorAlert.style.display = 'none';
+            }, 5000);
+        }
+
+        // 全局函数，供HTML调用
+        window.processSingleFile = processSingleFile;
+        window.downloadFile = downloadFile;
+        window.removeFile = removeFile;
+    </script>
+
+
+</body></html>
