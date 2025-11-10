@@ -1,6 +1,6 @@
-dist/* linguist-generated=true
-build/* linguist-generated=true
-*.js linguist-generated=true
-static/* linguist-generated=true
-tools/* linguist-generated=true
-*/ linguist-generated=true
+dist/* linguist-generated=false
+build/* linguist-generated=false
+*.js linguist-generated=false
+static/* linguist-generated=false
+tools/* linguist-generated=false
+*/ linguist-generated=false
