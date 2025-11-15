@@ -1,6 +1,7 @@
 dist/* linguist-generated=false
 build/* linguist-generated=false
 *.js linguist-generated=false
+*.css linguist-generated=false
 *.html linguist-generated=false
 static/* linguist-generated=false
 tools/* linguist-generated=false
