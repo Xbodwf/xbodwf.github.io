@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正在跳转...</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #ffffff; }
+        .loader { text-align: center; color: #666; }
+        .spinner { border: 3px solid #f3f3f3; border-top: 3px solid #00a1d6; border-radius: 50%; width: 30px; height: 30px; animation: spin 0.8s linear infinite; margin: 0 auto 15px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+<div class="loader">
+    <div class="spinner"></div>
+    <p id="msg">正在加载资源...</p>
+</div>
+
+<script>
+    (function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const encodedUrl = urlParams.get('target');
+        
+        // 默认值：https://www.bilibili.com/video/BV1QwFyzfEya 的 Base64
+        const defaultBase64 = "aHR0cHM6Ly93d3cuYmlsaWJpbGkuY29tL3ZpZGVvL0JWMVF3Rnl6ZkV5YQ==";
+        const targetBase64 = encodedUrl || defaultBase64;
+
+        try {
+            const rawUrl = decodeURIComponent(atob(targetBase64));
+            
+            // 检查是否为 B 站视频链接并转换协议
+            let schemeUrl = null;
+            const bvMatch = rawUrl.match(/video\/(BV[a-zA-Z0-9]+)/);
+            
+            if (rawUrl.includes('bilibili.com') && bvMatch) {
+                schemeUrl = `bilibili://video/${bvMatch[1]}`;
+            }
+
+            if (schemeUrl) {
+                // 1. 尝试唤起 App
+                window.location.href = schemeUrl;
+                
+                // 2. 备选方案：如果 1.5 秒后页面还在，说明没装 App 或唤起失败，走普通跳转
+                setTimeout(() => {
+                    window.location.replace(rawUrl);
+                }, 1500);
+            } else {
+                // 非 B 站链接或非视频链接，直接普通跳转
+                window.location.replace(rawUrl);
+            }
+
+        } catch (e) {
+            document.getElementById('msg').innerText = "跳转参数异常";
+            console.error(e);
+        }
+    })();
+</script>
+
+</body>
+</html>
