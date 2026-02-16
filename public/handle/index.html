@@ -3,57 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>正在跳转...</title>
+    <title>正在跳转</title>
     <style>
-        body { font-family: -apple-system, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #ffffff; }
-        .loader { text-align: center; color: #666; }
-        .spinner { border: 3px solid #f3f3f3; border-top: 3px solid #00a1d6; border-radius: 50%; width: 30px; height: 30px; animation: spin 0.8s linear infinite; margin: 0 auto 15px; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #fafafa; color: #999; }
     </style>
 </head>
 <body>
 
-<div class="loader">
-    <div class="spinner"></div>
-    <p id="msg">正在加载资源...</p>
-</div>
+<div id="status">正在处理请求...</div>
 
 <script>
     (function() {
         const urlParams = new URLSearchParams(window.location.search);
-        const encodedUrl = urlParams.get('target');
+        const encoded = urlParams.get('target');
         
-        // 默认值：https://www.bilibili.com/video/BV1QwFyzfEya 的 Base64
-        const defaultBase64 = "aHR0cHM6Ly93d3cuYmlsaWJpbGkuY29tL3ZpZGVvL0JWMVF3Rnl6ZkV5YQ==";
-        const targetBase64 = encodedUrl || defaultBase64;
+        // 默认值：bilibili://video/BV1QwFyzfEya 的 Base64 编码
+        // 编码结果：YmlsaWJpbGk6Ly92aWRlby9CVjFRd0Z5emZFeWE=
+        const defaultBase64 = "YmlsaWJpbGk6Ly92aWRlby9CVjFRd0Z5emZFeWE=";
+        
+        const targetBase64 = encoded || defaultBase64;
 
         try {
-            const rawUrl = decodeURIComponent(atob(targetBase64));
-            
-            // 检查是否为 B 站视频链接并转换协议
-            let schemeUrl = null;
-            const bvMatch = rawUrl.match(/video\/(BV[a-zA-Z0-9]+)/);
-            
-            if (rawUrl.includes('bilibili.com') && bvMatch) {
-                schemeUrl = `bilibili://video/${bvMatch[1]}`;
-            }
+            // 1. 解码 Base64
+            const finalUrl = atob(targetBase64);
 
-            if (schemeUrl) {
-                // 1. 尝试唤起 App
-                window.location.href = schemeUrl;
-                
-                // 2. 备选方案：如果 1.5 秒后页面还在，说明没装 App 或唤起失败，走普通跳转
-                setTimeout(() => {
-                    window.location.replace(rawUrl);
-                }, 1500);
-            } else {
-                // 非 B 站链接或非视频链接，直接普通跳转
-                window.location.replace(rawUrl);
-            }
+            // 2. 直接替换地址
+            // 如果是 bilibili:// 协议，浏览器会尝试唤起 App
+            // 如果是 https:// 协议，浏览器会直接跳到网页
+            window.location.replace(finalUrl);
 
         } catch (e) {
-            document.getElementById('msg').innerText = "跳转参数异常";
-            console.error(e);
+            document.getElementById('status').innerText = "链接解析失败";
         }
     })();
 </script>
