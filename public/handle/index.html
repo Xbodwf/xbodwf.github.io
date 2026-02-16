@@ -31,6 +31,10 @@
             // 如果是 bilibili:// 协议，浏览器会尝试唤起 App
             // 如果是 https:// 协议，浏览器会直接跳到网页
             window.location.replace(finalUrl);
+            setTimeout(() => {
+    // 如果你不想让他跳网页，可以在这里强行停止或跳往别处
+               window.stop(); 
+            }, 500);
 
         } catch (e) {
             document.getElementById('status').innerText = "链接解析失败";
