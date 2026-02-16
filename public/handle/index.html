@@ -5,39 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>正在跳转</title>
     <style>
-        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #fafafa; color: #999; }
+        body { font-family: -apple-system, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #ffffff; color: #666; }
+        .dot-loader { display: flex; align-items: center; }
+        .dot { width: 8px; height: 8px; margin: 0 4px; background: #00a1d6; border-radius: 50%; opacity: 0; animation: fade 1.5s infinite; }
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes fade { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
     </style>
 </head>
 <body>
 
-<div id="status">正在处理请求...</div>
+<div class="dot-loader">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+</div>
 
 <script>
     (function() {
         const urlParams = new URLSearchParams(window.location.search);
         const encoded = urlParams.get('target');
         
-        // 默认值：bilibili://video/BV1QwFyzfEya 的 Base64 编码
-        // 编码结果：YmlsaWJpbGk6Ly92aWRlby9CVjFRd0Z5emZFeWE=
-        const defaultBase64 = "YmlsaWJpbGk6Ly92aWRlby9CVjFRd0Z5emZFeWE=";
-        
-        const targetBase64 = encoded || defaultBase64;
+        // 判定是否为移动设备
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+        const defaultMobile = "YmlsaWJpbGk6Ly92aWRlby9CVjFRd0Z5emZFeWE=";
+        const defaultPC = "aHR0cHM6Ly93d3cuYmlsaWJpbGkuY29tL3ZpZGVvL0JWMVF3Rnl6ZkV5YQ==";
+
+        const targetBase64 = encoded || (isMobile ? defaultMobile : defaultPC);
 
         try {
-            // 1. 解码 Base64
+            // 解码并跳转
             const finalUrl = atob(targetBase64);
-
-            // 2. 直接替换地址
-            // 如果是 bilibili:// 协议，浏览器会尝试唤起 App
-            // 如果是 https:// 协议，浏览器会直接跳到网页
             window.location.replace(finalUrl);
-            setTimeout(() => {
-    // 如果你不想让他跳网页，可以在这里强行停止或跳往别处
-               window.stop(); 
-            }, 500);
-
         } catch (e) {
-            document.getElementById('status').innerText = "链接解析失败";
+            console.error("Jump failed", e);
+            
+            window.location.replace("https://www.bilibili.com");
         }
     })();
 </script>
